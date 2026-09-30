@@ -1,0 +1,268 @@
+{
+  "contact-us (quote / RFQ)": {
+    "title": "Request a Quote",
+    "items": [
+      {
+        "question": "Company Legal Name ",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Name",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Email",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Delivery Postcode / Country",
+        "type": "paragraph",
+        "required": true
+      },
+      {
+        "question": "WhatsApp / Phone Number (+ ISD Phone Number)",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Required Grade (e.g., 42CrMo4, 1.8509, SAE 1006)",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Total Quantity (eg: 23 Tons)",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Specific Dimensions, Tolerances and Length",
+        "type": "paragraph",
+        "required": false
+      },
+      {
+        "question": "Target Price per Metric Ton (EUR / USD)  ",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Required Delivery Window / Lead Time Expectation  ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Immediate Spot Allocation (Subject to current stock/port availability)",
+          "Within 30–60 Days",
+          "Within 90–120 Days (Future Mill Rolling Program Allocation)"
+        ]
+      }
+    ]
+  },
+  "cbam-europe": {
+    "title": "CBAM Advisory Form",
+    "items": [
+      {
+        "question": "Company Legal Name ",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "EORI Number  ",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Corporate Headquarters Country",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Contact Name",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Corporate Email Address",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "WhatsApp / Phone Number (+ ISD Phone Number)",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "What is your primary role in the supply chain?  ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "EU-based Importer of Record / Declarant",
+          "Non-EU Manufacturer / Exporting Mill",
+          "Downstream Industrial End-User / Fabricator"
+        ]
+      },
+      {
+        "question": "Which CBAM-governed commodity sectors do you currently import?",
+        "type": "checkboxes",
+        "required": false,
+        "options": [
+          "Iron and Steel",
+          "Aluminium",
+          "Fertilisers",
+          "Cement",
+          "Hydrogen",
+          "Electricity"
+        ]
+      },
+      {
+        "question": "What is your approximate annual import volume of these goods?  ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Below 50 Metric Tons (Exempted threshold)",
+          "50 – 10000 Metric Tons",
+          "Over 10,000 Metric Tons"
+        ]
+      },
+      {
+        "question": "What are the primary geographic origins of your non-EU material? (e.g., India, China, Turkey, UAE, South Korea)",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "What is your primary CBAM compliance challenge right now?  ",
+        "type": "checkboxes",
+        "required": false,
+        "options": [
+          "Obtaining accurate primary emissions data (tCO_2e/t) from non-EU manufacturing installations",
+          "Navigating and submitting data via the CBAM Transitional Registry portal.",
+          "Setting up corporate infrastructure (EORI matching, eHerkenning Level 3 setup, NCA account registration).",
+          "Auditing existing non-EU suppliers to verify if their data methods comply with EU Regulation 2023/956.",
+          "Structuring a long-term strategy to mitigate future carbon certificate (tariff) financial exposures."
+        ]
+      },
+      {
+        "question": "Are you currently facing a deadline, data rejection, or formal inquiry from a National Competent Authority (e.g., NEa)?  ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Yes — Critical/Immediate assistance required",
+          "No — Proactive infrastructure building"
+        ]
+      },
+      {
+        "question": "Briefly describe your current data-collection bottlenecks with your overseas mills:",
+        "type": "paragraph",
+        "required": false
+      },
+      {
+        "question": "What level of advisory support are you seeking?  ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "One-off Comprehensive Supply Chain Audit & Risk Assessment",
+          "Ongoing Retainer for Quarterly Registry Reporting & Mill Liaising",
+          "Ad-Hoc Technical Consultation / Executive Briefing"
+        ]
+      }
+    ]
+  },
+  "steel-suppliers (hidden page)": {
+    "title": "Global Supplier Registration Form",
+    "items": [
+      {
+        "question": "Registered Company Name",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Corporate Email ",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Country of Production Origin",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "Contact Person & Designation  ",
+        "type": "short text",
+        "required": true
+      },
+      {
+        "question": "WhatsApp / Phone Number (+ ISD Phone Number)",
+        "type": "short text",
+        "required": false
+      },
+      {
+        "question": "Steel Melting Route ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Electric Arc Furnace (EAF)",
+          "Induction Furnace (IF)",
+          "Blast Furnace / Basic Oxygen Furnace (BOF)"
+        ]
+      },
+      {
+        "question": "Core Product Categories Supplied  ",
+        "type": "checkboxes",
+        "required": false,
+        "options": [
+          "Long Products (Bars)",
+          "Flat Products (HRC/Plates)",
+          "Pipes & Tubes",
+          "Wire Rods / Drawn Wires",
+          "Fasteners & Hardware"
+        ]
+      },
+      {
+        "question": "Can your mill provide a certified Mill Test Certificate (MTC) alongside a declaration confirming the country of origin of the input semi-finished steel (billets/slabs/blooms) used for production?",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Yes - We can provide comprehensive upstream raw material tracking records for every heat number.",
+          "No - We source input steel from mixed regional merchants."
+        ]
+      },
+      {
+        "question": "Available Steel Grades & Dimensional Ranges  ",
+        "type": "paragraph",
+        "required": false
+      },
+      {
+        "question": "Has your production facility’s specific greenhouse gas (GHG) monitoring methodology been audited or verified by an independent third-party certification body (e.g., SGS, TÜV, Bureau Veritas)?",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Yes - Fully audited (Please be prepared to upload the verification report).",
+          "In Progress - Currently aligning tracking with EU standards.",
+          "No - We currently utilize standard domestic baseline metrics."
+        ]
+      },
+      {
+        "question": "CBAM Monitoring Capability  ",
+        "type": "multiple choice",
+        "required": false,
+        "options": [
+          "Yes - We track and provide actual embedded emissions (tCO_2e/t) per production lot",
+          "No - We currently rely on default European data models."
+        ]
+      },
+      {
+        "question": "Please select all active quality and system certifications currently held by your manufacturing plant:  ",
+        "type": "checkboxes",
+        "required": false,
+        "options": [
+          "ISO 9001 (Quality Management System)",
+          "ISO 14001 (Environmental Management System)",
+          "EN 10204 Type 3.1 Availability (Guaranteed material traceability)",
+          "EN 10204 Type 3.2 Availability (Independent third-party inspection capability)",
+          "CE / UKCA Marking (For structural steel applications)"
+        ]
+      }
+    ]
+  }
+}

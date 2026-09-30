@@ -1,0 +1,199 @@
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinzoku Trade - CBAM Steel Liability Calculator</title>
+    <style>
+        :root {
+            --steel-blue: #1e293b;
+            --accent-orange: #f97316;
+            --light-gray: #f8fafc;
+            --border-color: #cbd5e1;
+        }
+        .cbam-container {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 550px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .cbam-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 15px;
+        }
+        .cbam-header h2 {
+            color: var(--steel-blue);
+            margin: 0 0 5px 0;
+            font-size: 22px;
+        }
+        .cbam-header p {
+            color: #64748b;
+            margin: 0;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--steel-blue);
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 15px;
+            background-color: #fff;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+        .calc-btn {
+            width: 100%;
+            background-color: var(--steel-blue);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .calc-btn:hover {
+            background-color: #0f172a;
+        }
+        .cbam-results {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: var(--light-gray);
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-orange);
+            display: none;
+        }
+        .cbam-results h3 {
+            margin: 0 0 12px 0;
+            color: var(--steel-blue);
+            font-size: 16px;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .result-row:last-child {
+            margin-bottom: 0;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-color);
+            font-weight: bold;
+        }
+        .disclaimer {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 15px;
+            text-align: center;
+            line-height: 1.4;
+        }
+    </style>
+
+
+
+<div class="cbam-container">
+    <div class="cbam-header">
+        <h2>CBAM Liability Calculator</h2>
+        <p>Estimate EU import carbon exposure for Steel products (2026 Phase)</p>
+    </div>
+
+    <div class="form-group">
+        <label for="steelRoute">Steel Production Route / Product Type</label>
+        <select id="steelRoute">
+            <option value="1.90">Crude Iron &#x26; Steel (Blast Furnace / BOF Default) ~ 1.90 tCO2/t</option>
+            <option value="1.53">Hot-Rolled Steel Coil / Flat Steel ~ 1.53 tCO2/t</option>
+            <option value="1.033">Direct Reduced Iron (DRI / EAF Route) ~ 1.033 tCO2/t</option>
+            <option value="0.288">Scrap-based Electric Arc Furnace (EAF) ~ 0.288 tCO2/t</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tonnage">Import Volume (Metric Tons)</label>
+        <input type="number" id="tonnage" placeholder="e.g. 500" min="0" required>
+    </div>
+
+    <div class="form-group">
+        <label for="etsPrice">EU ETS Carbon Price (€ per tCO₂e)</label>
+        <input type="number" id="etsPrice" value="75" min="0">
+    </div>
+
+    <button type="button" class="calc-btn" onclick="calculateCBAM()">Calculate Financial Exposure</button>
+
+    <div id="resultsBlock" class="cbam-results">
+        <h3>Estimated 2026 Liability</h3>
+        <div class="result-row">
+            <span>Total Embedded Emissions:</span>
+            <span id="resEmissions">0.00 tCO₂e</span>
+        </div>
+        <div class="result-row">
+            <span>2026 Phase-In Rate:</span>
+            <span>2.5%</span>
+        </div>
+        <div class="result-row">
+            <span>Certificates To Surrender:</span>
+            <span id="resCertificates">0.00</span>
+        </div>
+        <div class="result-row">
+            <span>Estimated CBAM Cost:</span>
+            <span id="resCost" style="color: var(--accent-orange);">€0.00</span>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        Calculations are based on 2026 EU default adjustment variables (2.5% exposure rule). Real procurement exposure may vary depending on actual factory data and third-party country tax deductions.
+    </div>
+</div>
+
+<script>
+function calculateCBAM() {
+    const factor = parseFloat(document.getElementById('steelRoute').value);
+    const tons = parseFloat(document.getElementById('tonnage').value);
+    const etsPrice = parseFloat(document.getElementById('etsPrice').value);
+    
+    if (isNaN(tons) || tons <= 0) {
+        alert("Please enter a valid import volume.");
+        return;
+    }
+
+    // 1. Total embedded carbon footprint
+    const totalEmissions = tons * factor;
+    
+    // 2. 2026 factor: Only 2.5% of the total liability is payable due to the slow phase-out of free allocations
+    const phaseInRate = 0.025; 
+    const certificatesNeeded = totalEmissions * phaseInRate;
+    
+    // 3. Financial liability
+    const totalCost = certificatesNeeded * etsPrice;
+
+    // Output formatting
+    document.getElementById('resEmissions').innerText = totalEmissions.toLocaleString('en-US', {maximumFractionDigits: 2}) + " tCO₂e";
+    document.getElementById('resCertificates').innerText = certificatesNeeded.toLocaleString('en-US', {maximumFractionDigits: 2});
+    document.getElementById('resCost').innerText = "€" + totalCost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    
+    // Reveal display block
+    document.getElementById('resultsBlock').style.display = 'block';
+}
+</script>
+
+
+
