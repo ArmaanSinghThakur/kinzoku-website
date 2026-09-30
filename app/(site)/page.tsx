@@ -1,7 +1,7 @@
 // Temporary page to check the design tokens and fonts. Replaced by the real homepage in Step 7.
 export default function Home() {
   return (
-    <main className="flex-1">
+    <>
       <section className="bg-charcoal py-20 text-white">
         <div className="site-container">
           <h1 className="max-w-3xl text-4xl text-white sm:text-5xl">
@@ -36,6 +36,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

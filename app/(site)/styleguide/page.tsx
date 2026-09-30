@@ -22,7 +22,7 @@ const sample = <span className="text-xs font-normal text-muted"> (sample data)</
 
 export default function StyleguidePage() {
   return (
-    <main className="flex-1">
+    <>
       <div className="site-container pt-8">
         <Breadcrumbs
           items={[
@@ -162,6 +162,6 @@ export default function StyleguidePage() {
       <Section tone="dark" eyebrow="Dark tone" title="Section on charcoal" intro="Used sparingly, for example under the hero." />
 
       <QuoteBanner />
-    </main>
+    </>
   );
 }

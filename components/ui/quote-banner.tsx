@@ -1,4 +1,4 @@
-import { site } from "@/lib/site";
+import { routes } from "@/lib/routes";
 import { ButtonLink } from "./button";
 
 type QuoteBannerProps = {
@@ -13,7 +13,7 @@ type QuoteBannerProps = {
 export function QuoteBanner({
   title = "Request a quote",
   text = "Tell us the product, specification, quantity and delivery country.",
-  href = site.quoteHref,
+  href = routes.quote,
   cta = "Request a quote",
 }: QuoteBannerProps) {
   return (

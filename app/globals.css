@@ -29,6 +29,11 @@
 }
 
 @layer base {
+  html {
+    /* Anchor links (e.g. #quote) stop below the sticky 64px header. */
+    scroll-padding-top: 5rem;
+  }
+
   body {
     @apply bg-white font-sans text-base text-ink antialiased;
   }
@@ -52,6 +57,12 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-steel;
   }
+}
+
+/* WhatsApp button steps aside while someone is filling in a form or using the mobile menu. */
+body:has(form:focus-within) .whatsapp-button,
+body:has([role="dialog"]) .whatsapp-button {
+  visibility: hidden;
 }
 
 /* Motion: CSS only, no JavaScript. Browsers without support, and visitors who
