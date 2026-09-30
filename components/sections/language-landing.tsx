@@ -6,6 +6,7 @@ import { Faq } from "@/components/ui/faq";
 import { QuoteBanner } from "@/components/ui/quote-banner";
 import { Section } from "@/components/ui/section";
 import type { LanguagePage } from "@/content/language-pages/types";
+import { languageAlternates, openGraph } from "@/lib/seo";
 
 // The four "why" points are the same on every language page, in the same order.
 const whyIcons = [BadgeCheck, FileCheck2, Factory, Truck];
@@ -14,7 +15,12 @@ export function languageMetadata(page: LanguagePage): Metadata {
   return {
     title: page.meta.title,
     description: page.meta.description,
-    alternates: { canonical: `/${page.slug}` },
+    alternates: {
+      canonical: `/${page.slug}`,
+      // The Africa page is English for another market, not a translation: no hreflang cluster.
+      ...(page.lang === "en" ? {} : { languages: languageAlternates }),
+    },
+    openGraph: openGraph({ locale: page.lang.replace("-", "_") }),
   };
 }
 

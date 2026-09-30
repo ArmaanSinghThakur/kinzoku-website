@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { NextConfig } from "next";
+import { routes } from "./lib/routes";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -46,10 +47,25 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: projectRoot,
 
   async redirects() {
-    return [
-      // Old quote link used by the 8 language pages (currently a 404).
-      { source: "/contactus-sales", destination: "/contact-us#quote", permanent: true },
+    // Every address of the live site keeps working (plan). Hidden builder pages and the old
+    // duplicate article go to their closest current page (docs/content-report.md §2.3, approved).
+    const moved: [string, string][] = [
+      // Old quote link used by the 8 language pages (a 404 on the live site).
+      ["/contactus-sales", "/contact-us#quote"],
+      ["/risk-leverage-in-steel-procurement-the-reality-of-deferred-cbam-liabilities", "/risk-leverage-in-steel-procurement-deferred-cbam-liabilities"],
+      ["/wire-and-downstream-products-wire-rods-drawn-wires", routes.wire],
+      ["/finished-fasteners-and-hardware-nails-high-tensile-bolts-pins-locking-nuts", routes.nails],
+      ["/flat-products-hr-coil-cr-coil-plates", routes.bars],
+      ["/pipes-tubes-and-hollow-sections-seamless-welded-structural-hss", routes.bars],
+      ["/semi-finished-steel-billets-blooms-slabs", routes.bars],
+      ["/stainless-and-special-steels-bars-special-alloys-valve-bars", routes.bars],
+      ["/structural-sections-and-profiles-beams-channels-angles", routes.bars],
+      ["/resources-cbam", routes.blog],
+      ["/cbam-verification-risk-asian-steel-europe-2026", routes.cbam],
+      ["/scandinavian-steel-import-sourcing", "/how-we-work-sourcing-steel-asia-europe"],
+      ["/steel-suppliers", routes.contact],
     ];
+    return moved.map(([source, destination]) => ({ source, destination, permanent: true }));
   },
 
   async headers() {

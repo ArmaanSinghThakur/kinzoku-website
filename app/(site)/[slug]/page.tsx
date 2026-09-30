@@ -7,7 +7,10 @@ import { Section } from "@/components/ui/section";
 import { articles } from "@/content/blog/articles.generated";
 import { getArticle, listArticles } from "@/lib/blog";
 import { formatDate } from "@/lib/format";
+import { JsonLd } from "@/components/seo/json-ld";
 import { routes } from "@/lib/routes";
+import { openGraph } from "@/lib/seo";
+import { articleJsonLd } from "@/lib/structured-data";
 
 // Blog articles at their current addresses (e.g. /cbam-2026-complete-guide-steel-importers).
 // Only these slugs exist; any other top-level address falls through to the 404 page.
@@ -25,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/[slug]">): Promis
     title: article.seoTitle,
     description: article.description,
     alternates: { canonical: `/${article.slug}` },
-    openGraph: { type: "article", title: article.title, description: article.description },
+    openGraph: openGraph({ type: "article", title: article.title, description: article.description }),
   };
 }
 
@@ -64,6 +67,7 @@ export default async function ArticlePage({ params }: PageProps<"/[slug]">) {
       )}
 
       <QuoteBanner />
+      <JsonLd data={articleJsonLd(article)} />
     </>
   );
 }

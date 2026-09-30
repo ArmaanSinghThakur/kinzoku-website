@@ -9,12 +9,15 @@ import { QuoteBanner } from "@/components/ui/quote-banner";
 import { Section } from "@/components/ui/section";
 import { TrustBadge } from "@/components/ui/trust-badge";
 import { home } from "@/content/pages/home";
+import { JsonLd } from "@/components/seo/json-ld";
 import { routes } from "@/lib/routes";
+import { languageAlternates } from "@/lib/seo";
+import { organizationJsonLd, serviceJsonLd, storeJsonLd, websiteJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: { absolute: home.meta.title },
   description: home.meta.description,
-  alternates: { canonical: routes.home },
+  alternates: { canonical: routes.home, languages: languageAlternates },
 };
 
 const badgeIcons = { certificate: FileCheck2, cbam: ShieldCheck, delivery: Truck, quota: Scale };
@@ -78,6 +81,7 @@ export default function HomePage() {
       </Section>
 
       <QuoteBanner />
+      <JsonLd data={[organizationJsonLd, websiteJsonLd, storeJsonLd, serviceJsonLd]} />
     </>
   );
 }

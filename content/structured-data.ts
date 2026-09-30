@@ -1,0 +1,334 @@
+// Descriptive parts of the live site's structured data (Google), from content/_source/_site-jsonld.json.
+// Phone, email, address, URLs and images are added from lib/site.ts in lib/structured-data.ts, so the
+// wrong live phone number ("+31-6-8255-9185") is gone and the number is written in one place.
+export const structuredData = {
+  "website": {
+    "name": "Kinzoku",
+    "description": "Bulk coil nails, EPAL pallet nails, loose nails, staples & nail wire. CBAM-cleared, EN 10204 3.1 certified, CIF, DAP or DDP delivery across Europe, LatAm & Africa.",
+    "inLanguage": "en",
+    "keywords": [
+      "Coil Nails",
+      "CBAM"
+    ]
+  },
+  "organization": {
+    "alternateName": "Kinzoku",
+    "description": "Wholesale supplier of coil nails, EPAL pallet nails, loose nails, staples, nail wire and steel round bars. Authorized CBAM Declarant with EN 10204 3.1 certified mill-direct supply from Amsterdam.",
+    "addressRegion": "North Holland",
+    "contactType": "sales",
+    "availableLanguage": [
+      "English",
+      "Dutch",
+      "German",
+      "French",
+      "Spanish",
+      "Portuguese",
+      "Italian",
+      "Polish"
+    ],
+    "areaServed": [
+      "NL",
+      "DE",
+      "AT",
+      "CH",
+      "BE",
+      "FR",
+      "IT",
+      "ES",
+      "PL",
+      "CZ",
+      "MX",
+      "BR",
+      "CO",
+      "PE",
+      "CL",
+      "AR",
+      "MA",
+      "DZ",
+      "TN",
+      "EG",
+      "NG",
+      "GH",
+      "KE",
+      "ZA",
+      "AO",
+      "MZ",
+      "SN",
+      "CI",
+      "CM",
+      "CD",
+      "US",
+      "CA"
+    ]
+  },
+  "store": {
+    "priceRange": "€€€",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.3676,
+      "longitude": 4.9041
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    "currenciesAccepted": "EUR, USD",
+    "paymentAccepted": "Bank Transfer, Letter of Credit",
+    "areaServed": [
+      "Europe",
+      "Latin America",
+      "Africa",
+      "North America"
+    ]
+  },
+  "service": {
+    "serviceType": "Fastener & Steel Import and Supply Chain Management",
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "Netherlands"
+      },
+      {
+        "@type": "Country",
+        "name": "Germany"
+      },
+      {
+        "@type": "Country",
+        "name": "Austria"
+      },
+      {
+        "@type": "Country",
+        "name": "Switzerland"
+      },
+      {
+        "@type": "Country",
+        "name": "Belgium"
+      },
+      {
+        "@type": "Country",
+        "name": "France"
+      },
+      {
+        "@type": "Country",
+        "name": "Italy"
+      },
+      {
+        "@type": "Country",
+        "name": "Spain"
+      },
+      {
+        "@type": "Country",
+        "name": "Poland"
+      },
+      {
+        "@type": "Country",
+        "name": "Czechia"
+      },
+      {
+        "@type": "Country",
+        "name": "Mexico"
+      },
+      {
+        "@type": "Country",
+        "name": "Brazil"
+      },
+      {
+        "@type": "Country",
+        "name": "Colombia"
+      },
+      {
+        "@type": "Country",
+        "name": "Peru"
+      },
+      {
+        "@type": "Country",
+        "name": "Chile"
+      },
+      {
+        "@type": "Country",
+        "name": "Argentina"
+      },
+      {
+        "@type": "Country",
+        "name": "Morocco"
+      },
+      {
+        "@type": "Country",
+        "name": "Algeria"
+      },
+      {
+        "@type": "Country",
+        "name": "Tunisia"
+      },
+      {
+        "@type": "Country",
+        "name": "Egypt"
+      },
+      {
+        "@type": "Country",
+        "name": "Nigeria"
+      },
+      {
+        "@type": "Country",
+        "name": "Ghana"
+      },
+      {
+        "@type": "Country",
+        "name": "Kenya"
+      },
+      {
+        "@type": "Country",
+        "name": "South Africa"
+      },
+      {
+        "@type": "Country",
+        "name": "Angola"
+      },
+      {
+        "@type": "Country",
+        "name": "Mozambique"
+      },
+      {
+        "@type": "Country",
+        "name": "Ivory Coast"
+      },
+      {
+        "@type": "Country",
+        "name": "Senegal"
+      },
+      {
+        "@type": "Country",
+        "name": "Cameroon"
+      },
+      {
+        "@type": "Country",
+        "name": "DR Congo"
+      },
+      {
+        "@type": "Country",
+        "name": "United States"
+      },
+      {
+        "@type": "Country",
+        "name": "Canada"
+      }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Fasteners, Nail Wire & Steel Products",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Coil Nails Supply",
+            "alternateName": [
+              "Rollnägel",
+              "Palettennägel",
+              "Clous en rouleau",
+              "Clavos en rollo",
+              "Pregos em rolo",
+              "Chiodi in rotolo",
+              "Gwoździe zwojowe",
+              "Coilnagels"
+            ],
+            "description": "15-16 degree wire collated coil nails, 2.1-3.8 mm x 25-100 mm, screw/ring/smooth shank, for pallet manufacturing and pneumatic nailers.",
+            "url": "https://www.kinzokutrade.com/coil-nails-staples-bulk-nails-epal-certified-pallet-nails"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "EPAL Pallet Nails Supply",
+            "alternateName": [
+              "EPAL-Nägel",
+              "Pointes EPAL",
+              "Clavos EPAL",
+              "Pregos EPAL",
+              "Chiodi EPAL",
+              "Gwoździe EPAL",
+              "EPAL-nagels"
+            ],
+            "description": "EPAL-certified pallet nails in all EPAL dimensions, EN 14592 compliant with mandatory head marking, tested for automated pallet lines.",
+            "url": "https://www.kinzokutrade.com/coil-nails-staples-bulk-nails-epal-certified-pallet-nails"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Loose Common Nails Supply",
+            "alternateName": [
+              "Drahtnägel",
+              "Lose Nägel",
+              "Clous en vrac",
+              "Clavos sueltos",
+              "Pregos comuns",
+              "Chiodi sfusi",
+              "Gwoździe luzem",
+              "Losse spijkers"
+            ],
+            "description": "Bulk common wire nails, 2.2-6.0 mm x 40-200 mm, bright, electro-galvanized and hot-dip galvanized, 20-25 kg cartons on pallets.",
+            "url": "https://www.kinzokutrade.com/coil-nails-staples-bulk-nails-epal-certified-pallet-nails"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Industrial Staples Supply",
+            "alternateName": [
+              "Heftklammern",
+              "Klammern",
+              "Agrafes",
+              "Grapas industriales",
+              "Grampos industriais",
+              "Graffe",
+              "Zszywki",
+              "Nieten"
+            ],
+            "description": "Galvanized industrial staples, series 71, 80, 90, 92, lengths 4-40 mm, for upholstery, furniture, insulation and packaging.",
+            "url": "https://www.kinzokutrade.com/coil-nails-staples-bulk-nails-epal-certified-pallet-nails"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Nail Wire Supply",
+            "alternateName": [
+              "Nageldraht",
+              "Fil à clous",
+              "Alambre para clavos",
+              "Arame para pregos",
+              "Filo per chiodi",
+              "Drut na gwoździe",
+              "Spijkerdraad",
+              "Nail making wire"
+            ],
+            "description": "Low carbon steel nail wire SAE 1008/1010, optimized for Enkotec, Wafios and Vitari high-speed nail machines, EN 10204 3.1 certified.",
+            "url": "https://www.kinzokutrade.com/low-carbon-steel-wire-for-nail-manufacturing"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Steel Round Bars Supply",
+            "description": "Hot-rolled and bright steel round bars in carbon and alloy grades, mill-direct with full CBAM declaration and customs clearance.",
+            "url": "https://www.kinzokutrade.com/contactus-sales"
+          }
+        }
+      ]
+    }
+  }
+};

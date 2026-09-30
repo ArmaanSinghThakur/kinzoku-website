@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { JsonLd } from "@/components/seo/json-ld";
 import { site } from "@/lib/site";
 
 export type Crumb = { name: string; href: string };
@@ -35,11 +36,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
           </li>
         ))}
       </ol>
-      {/* Escaping "<" prevents the JSON from closing the script tag early. */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-      />
+      <JsonLd data={jsonLd} />
     </nav>
   );
 }
