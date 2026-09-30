@@ -1,5 +1,7 @@
+import { after } from "next/server";
 import { RateLimiterMemory, RateLimiterRes } from "rate-limiter-flexible";
 import { maxFileMb, maxFiles, quoteForm as t } from "@/content/quote-form";
+import { sendDueEmails } from "@/lib/email-outbox";
 import { validateQuote } from "@/lib/quote-validation";
 import { clientIp, isSameOrigin } from "@/lib/request";
 import { createRfq } from "@/lib/rfq";
@@ -68,8 +70,9 @@ export async function POST(request: Request) {
   let saved: Awaited<ReturnType<typeof saveUploads>> = [];
   try {
     saved = await saveUploads(inspected as Upload[]);
-    // The status link secret is emailed to the buyer in Step 16.
-    const { reference } = await createRfq(checked.data, saved);
+    const reference = await createRfq(checked.data, saved);
+    // Emails go out right after the answer is sent; if that fails, the background sender retries.
+    after(() => sendDueEmails().catch((error) => console.error("Sending emails after a request:", error)));
     return reply({ ok: true, reference }, 201);
   } catch (error) {
     // Nothing half-saved: without the request, its files go too. Our failure doesn't count

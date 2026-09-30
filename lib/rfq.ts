@@ -34,11 +34,12 @@ export async function nextRfqReference(tx: Prisma.TransactionClient, year = new 
 type SavedFile = { fileName: string; storagePath: string; mimeType: string; sizeBytes: number };
 
 /**
- * Saves a checked quote request with its first status entry and its files' records, all or
- * nothing. Returns the reference and the status link secret (for the buyer's email only).
+ * Saves a checked quote request with its first status entry, its files' records and its two
+ * queued emails, all or nothing. The status link's secret is made when the buyer's email is
+ * sent (lib/email-outbox.ts); until then the request holds the hash of an unused random one.
  */
 export async function createRfq(request: QuoteRequest, files: SavedFile[]) {
-  const { token, hash } = newStatusToken();
+  const { hash } = newStatusToken();
   const { type, companyName, contactName, email, phone, message } = request;
   const product =
     "specification" in request
@@ -70,11 +71,12 @@ export async function createRfq(request: QuoteRequest, files: SavedFile[]) {
         statusTokenHash: hash,
         statusHistory: { create: { toStatus: "received" } },
         files: { create: files },
+        emails: { create: [{ kind: "buyer_confirmation" }, { kind: "sales_alert" }] },
       },
       select: { reference: true },
     }),
   );
-  return { reference, token };
+  return reference;
 }
 
 /** Leaves out unanswered questions (and empty lists) so details only holds real answers. */

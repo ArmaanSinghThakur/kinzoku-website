@@ -1,6 +1,6 @@
-# Local development database (Step 14). Phase 5 adds the website and Caddy for the server.
-#   npm run db:up     start (waits until the database accepts connections)
-#   npm run db:down   stop; the data stays in the "pgdata" volume until the volume is removed
+# Local development services. Phase 5 adds the website and Caddy for the server.
+#   npm run services:up     start both (waits until they are ready)
+#   npm run services:down   stop both; the data stays in the "pgdata" volume until it is removed
 name: kinzoku
 
 services:
@@ -21,6 +21,14 @@ services:
       interval: 2s
       timeout: 3s
       retries: 15
+
+  # Catches every email the site sends locally (nothing reaches real addresses).
+  # Inbox: http://localhost:8025
+  mail:
+    image: axllent/mailpit:v1.31
+    ports:
+      - "127.0.0.1:1025:1025" # SMTP
+      - "127.0.0.1:8025:8025" # inbox in the browser
 
 volumes:
   pgdata:

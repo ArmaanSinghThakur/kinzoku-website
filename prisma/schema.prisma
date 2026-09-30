@@ -45,6 +45,13 @@ enum RfqStatus {
   @@map("rfq_status")
 }
 
+enum EmailKind {
+  buyer_confirmation
+  sales_alert
+
+  @@map("email_kind")
+}
+
 enum ChatSender {
   buyer
   staff
@@ -119,6 +126,7 @@ model Rfq {
   files         RfqFile[]
   statusHistory RfqStatusChange[]
   chatMessages  ChatMessage[]
+  emails        EmailOutbox[]
 
   @@index([status, createdAt])
   @@index([createdAt])
@@ -188,6 +196,27 @@ model ChatMessage {
   @@unique([rfqId, clientMessageId])
   @@index([rfqId, createdAt])
   @@map("chat_messages")
+}
+
+/// Emails waiting to be sent, and a record of those sent. Each is created in the same transaction
+/// as its request, so a request never goes without its emails; if the mail server is down they
+/// are retried (lib/email-outbox.ts). The email itself is written at sending time from the request,
+/// so no copy of its content is kept here.
+model EmailOutbox {
+  id            String    @id @default(uuid(7)) @db.Uuid
+  rfqId         String    @map("rfq_id") @db.Uuid
+  kind          EmailKind
+  attempts      Int       @default(0)
+  lastError     String?   @map("last_error") @db.VarChar(500)
+  nextAttemptAt DateTime  @default(now()) @map("next_attempt_at") @db.Timestamptz(3)
+  sentAt        DateTime? @map("sent_at") @db.Timestamptz(3)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  rfq Rfq @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+
+  @@unique([rfqId, kind])
+  @@index([sentAt, nextAttemptAt])
+  @@map("email_outbox")
 }
 
 /// CBAM calculator results a visitor asked to receive by email. Deleted after 12 months.

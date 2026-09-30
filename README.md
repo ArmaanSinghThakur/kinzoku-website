@@ -10,13 +10,14 @@ Needs Node 24 and Docker Desktop.
 ```bash
 npm install                 # also prepares the database client
 cp .env.example .env        # first time only, then choose a database password (on both lines)
-npm run db:up               # start the database (Docker)
+npm run services:up         # start the database and the mail catcher (Docker)
 npm run db:migrate          # create or update the tables
 npm run dev                 # http://localhost:3000
 ```
 
 Pages work without the database; quote requests, the admin area and live chat need it.
-Files attached to quote requests are saved in `storage/uploads` (not in git).
+Files attached to quote requests are saved in `storage/uploads` (not in git). Emails sent locally
+are caught by Mailpit: read them at http://localhost:8025.
 
 ## Commands
 
@@ -25,7 +26,7 @@ Files attached to quote requests are saved in `storage/uploads` (not in git).
 | `npm run dev` | Development server with live reload |
 | `npm run build` / `npm start` | Production build / serve it |
 | `npm run lint` / `npm run typecheck` | Code checks |
-| `npm run db:up` / `npm run db:down` | Start / stop the local database (data is kept) |
+| `npm run services:up` / `npm run services:down` | Start / stop the local database and mail catcher (data is kept) |
 | `npm run db:migrate -- --name <change>` | After editing `prisma/schema.prisma`: record and apply the change |
 | `npm run db:deploy` | Apply recorded changes only (server) |
 | `npm run db:check` | Database check with test data that is removed afterwards |

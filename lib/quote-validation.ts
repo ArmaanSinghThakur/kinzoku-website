@@ -49,12 +49,15 @@ export type QuoteErrors = Partial<Record<string, string>>;
 const lists = new Set(["products", "finishes"]);
 const acceptedExtensions = new Set(acceptedFiles.split(","));
 
-/** Form fields as plain values: text trimmed, empty answers left out, checkbox groups as lists. */
+/**
+ * Form fields as plain values: text trimmed, with \n line breaks (forms send \r\n), empty answers
+ * left out, checkbox groups as lists.
+ */
 function readFields(form: FormData) {
   const fields: Record<string, string | string[]> = { products: [], finishes: [] };
   for (const [name, value] of form) {
     if (typeof value !== "string" || name === "files") continue;
-    const text = value.trim();
+    const text = value.replace(/\r\n?/g, "\n").trim();
     if (!text) continue;
     if (lists.has(name)) (fields[name] as string[]).push(text);
     else fields[name] = text;

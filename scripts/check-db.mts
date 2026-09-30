@@ -12,7 +12,7 @@ const TEST_EMAIL = "@db-check.invalid";
 const TEST_YEARS = [2098, 2099];
 const TABLES = [
   "staff_users", "companies", "rfqs", "rfq_reference_counters", "rfq_files",
-  "rfq_status_history", "chat_messages", "cbam_estimates",
+  "rfq_status_history", "chat_messages", "cbam_estimates", "email_outbox",
 ];
 
 let failed = false;
