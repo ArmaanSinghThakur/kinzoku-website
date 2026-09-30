@@ -53,3 +53,37 @@
     @apply outline-2 outline-offset-2 outline-steel;
   }
 }
+
+/* Motion: CSS only, no JavaScript. Browsers without support, and visitors who
+   prefer reduced motion, simply see everything without animation. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Short fade-in as a section scrolls into view. */
+  @supports (animation-timeline: view()) {
+    .fade-in {
+      animation: fade-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+
+  /* Smooth open/close for FAQ <details>. */
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 0.2s ease,
+      content-visibility 0.2s allow-discrete;
+  }
+  details[open]::details-content {
+    height: auto;
+  }
+}

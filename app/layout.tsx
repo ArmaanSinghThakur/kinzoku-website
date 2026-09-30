@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 // Self-hosted at build time: no browser request ever goes to Google Fonts.
@@ -18,9 +19,9 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.kinzokutrade.com"),
+  metadataBase: new URL(site.url),
   title: {
-    default: "Kinzoku Consultancy & Trade",
+    default: site.name,
     template: "%s | Kinzoku",
   },
   description:

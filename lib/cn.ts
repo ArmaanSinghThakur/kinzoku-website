@@ -1,0 +1,12 @@
+import { clsx, type ClassValue } from "clsx";
+import { extendTailwindMerge } from "tailwind-merge";
+
+// Register custom tokens from app/globals.css that tailwind-merge can't infer on its own.
+const twMerge = extendTailwindMerge({
+  extend: { theme: { shadow: ["card"] } },
+});
+
+/** Join class names; later Tailwind classes override earlier conflicting ones. */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
