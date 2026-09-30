@@ -1,0 +1,211 @@
+// Kinzoku database (plan: "Database", page 9). Business data only: quote requests, their files,
+// status history, chat, staff accounts, client companies and emailed CBAM estimates. Page content
+// stays in content/. Change this file, then run `npm run db:migrate -- --name <what-changed>`.
+//
+// Data-safety rules used below:
+// - A request's files, status history and chat are deleted with it (retention job, plan page 10).
+// - Deleting a staff user never deletes history or chat; their name is simply removed from it.
+// - A client company can't be deleted while requests are still linked to it.
+// - The buyer's private status link is never stored, only its SHA-256 hash (lib/rfq.ts).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StaffRole {
+  admin
+  sales
+
+  @@map("staff_role")
+}
+
+/// What the request is about. Product-specific answers go in Rfq.details.
+enum RequestType {
+  nails
+  wire
+  bars
+  cbam_advisory
+  other
+
+  @@map("request_type")
+}
+
+/// Quote status steps: Received → In review → Quote sent → Closed.
+enum RfqStatus {
+  received
+  in_review
+  quote_sent
+  closed
+
+  @@map("rfq_status")
+}
+
+enum ChatSender {
+  buyer
+  staff
+
+  @@map("chat_sender")
+}
+
+/// Kinzoku team members who log in to the admin area.
+model StaffUser {
+  id           String    @id @default(uuid(7)) @db.Uuid
+  /// Stored in lower case, so each address can only exist once.
+  email        String    @unique @db.VarChar(254)
+  name         String    @db.VarChar(200)
+  /// One-way password hash (set in Step 17), never the password itself.
+  passwordHash String    @map("password_hash")
+  role         StaffRole @default(sales)
+  /// Switched off instead of deleted, so their name stays on past messages.
+  active       Boolean   @default(true)
+  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz(3)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  statusChanges RfqStatusChange[]
+  chatMessages  ChatMessage[]
+
+  @@map("staff_users")
+}
+
+/// Buyers who became clients. Requests linked to a client are kept 7 years instead of 12 months.
+model Company {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  name        String   @db.VarChar(200)
+  country     String   @db.VarChar(100)
+  vatNumber   String?  @map("vat_number") @db.VarChar(30)
+  clientSince DateTime @map("client_since") @db.Date
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  rfqs Rfq[]
+
+  @@map("companies")
+}
+
+/// Every quote request from the website, including CBAM advisory requests.
+model Rfq {
+  id              String      @id @default(uuid(7)) @db.Uuid
+  /// KZ-2026-0001: from RfqCounter, see lib/rfq.ts.
+  reference       String      @unique @db.VarChar(20)
+  type            RequestType
+  companyName     String      @map("company_name") @db.VarChar(200)
+  contactName     String      @map("contact_name") @db.VarChar(200)
+  email           String      @db.VarChar(254)
+  phone           String?     @db.VarChar(50)
+  deliveryCountry String?     @map("delivery_country") @db.VarChar(200)
+  /// Grade or specification, e.g. "SAE 1006, 5.5 mm".
+  specification   String?     @db.Text
+  /// As typed by the buyer, e.g. "23 t".
+  quantity        String?     @db.VarChar(100)
+  deliveryTerms   String?     @map("delivery_terms") @db.VarChar(200)
+  message         String?     @db.Text
+  /// Answers that only one request type asks for (dimensions, target price, CBAM questions…).
+  details         Json        @default("{}")
+  status          RfqStatus   @default(received)
+  /// SHA-256 of the private status link's secret (the secret itself is only in the buyer's email).
+  statusTokenHash String      @unique @map("status_token_hash") @db.Char(64)
+  /// Set when the buyer became a client (keeps the request 7 years).
+  companyId       String?     @map("company_id") @db.Uuid
+  createdAt       DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  company       Company?          @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  files         RfqFile[]
+  statusHistory RfqStatusChange[]
+  chatMessages  ChatMessage[]
+
+  @@index([status, createdAt])
+  @@index([createdAt])
+  @@index([companyId])
+  @@map("rfqs")
+}
+
+/// Last reference number used per year. Increased in the same transaction that creates the request.
+model RfqCounter {
+  year       Int @id
+  lastNumber Int @map("last_number")
+
+  @@map("rfq_reference_counters")
+}
+
+/// Drawings or specifications attached to a request. The file itself is on the server's disk.
+model RfqFile {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  rfqId       String   @map("rfq_id") @db.Uuid
+  /// The buyer's file name, for display and download only.
+  fileName    String   @map("file_name") @db.VarChar(255)
+  /// Random name on the server's disk, never taken from the upload.
+  storagePath String   @unique @map("storage_path") @db.VarChar(255)
+  mimeType    String   @map("mime_type") @db.VarChar(100)
+  sizeBytes   Int      @map("size_bytes")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  rfq Rfq @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+
+  @@index([rfqId])
+  @@map("rfq_files")
+}
+
+/// Every status change, for the record. The first entry (fromStatus empty) is the request arriving.
+model RfqStatusChange {
+  id          String     @id @default(uuid(7)) @db.Uuid
+  rfqId       String     @map("rfq_id") @db.Uuid
+  fromStatus  RfqStatus? @map("from_status")
+  toStatus    RfqStatus  @map("to_status")
+  /// Empty for automatic changes, or when the staff user was later deleted.
+  changedById String?    @map("changed_by_id") @db.Uuid
+  createdAt   DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  rfq       Rfq        @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  changedBy StaffUser? @relation(fields: [changedById], references: [id], onDelete: SetNull)
+
+  @@index([rfqId, createdAt])
+  @@map("rfq_status_history")
+}
+
+/// Messages between a buyer and the sales team about one request.
+model ChatMessage {
+  id              String     @id @default(uuid(7)) @db.Uuid
+  rfqId           String     @map("rfq_id") @db.Uuid
+  sender          ChatSender
+  staffUserId     String?    @map("staff_user_id") @db.Uuid
+  body            String     @db.Text
+  /// Made by the sender's browser. If a message is sent again after a dropped connection,
+  /// the database refuses the copy, so nothing is lost and nothing appears twice.
+  clientMessageId String?    @map("client_message_id") @db.Uuid
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  readAt          DateTime?  @map("read_at") @db.Timestamptz(3)
+
+  rfq       Rfq        @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  staffUser StaffUser? @relation(fields: [staffUserId], references: [id], onDelete: SetNull)
+
+  @@unique([rfqId, clientMessageId])
+  @@index([rfqId, createdAt])
+  @@map("chat_messages")
+}
+
+/// CBAM calculator results a visitor asked to receive by email. Deleted after 12 months.
+model CbamEstimate {
+  id             String   @id @default(uuid(7)) @db.Uuid
+  email          String   @db.VarChar(254)
+  /// The calculator's steel route, as shown to the visitor.
+  productType    String   @map("product_type") @db.VarChar(200)
+  tonnes         Decimal  @db.Decimal(12, 3)
+  /// tCO₂ per tonne of product and the certificate share used, so the estimate can be recalculated.
+  emissionFactor Decimal  @map("emission_factor") @db.Decimal(8, 4)
+  phaseInRate    Decimal  @map("phase_in_rate") @db.Decimal(6, 5)
+  /// EU ETS price used, € per tCO₂e.
+  carbonPrice    Decimal  @map("carbon_price") @db.Decimal(10, 2)
+  /// Estimated cost in €.
+  estimatedCost  Decimal  @map("estimated_cost") @db.Decimal(14, 2)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([createdAt])
+  @@map("cbam_estimates")
+}

@@ -1,0 +1,30 @@
+import { createHash, randomBytes } from "node:crypto";
+import type { Prisma } from "@/lib/generated/prisma/client";
+
+/**
+ * Secret for the buyer's private status link (/rfq/status/<token>). 32 random bytes; the token is
+ * only sent in the buyer's email, the database keeps its SHA-256 hash. A copied database therefore
+ * can't be used to open anyone's request.
+ */
+export function newStatusToken() {
+  const token = randomBytes(32).toString("base64url");
+  return { token, hash: hashStatusToken(token) };
+}
+
+export function hashStatusToken(token: string) {
+  return createHash("sha256").update(token).digest("hex");
+}
+
+/**
+ * Next request reference for the year, e.g. KZ-2026-0001. Call it inside the transaction that
+ * creates the request, so a failed request doesn't use up a number. The counter update is a single
+ * INSERT … ON CONFLICT statement, so requests sent at the same moment never get the same number.
+ */
+export async function nextRfqReference(tx: Prisma.TransactionClient, year = new Date().getUTCFullYear()) {
+  const { lastNumber } = await tx.rfqCounter.upsert({
+    where: { year },
+    create: { year, lastNumber: 1 },
+    update: { lastNumber: { increment: 1 } },
+  });
+  return `KZ-${year}-${String(lastNumber).padStart(4, "0")}`;
+}

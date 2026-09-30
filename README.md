@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kinzoku website
 
-## Getting Started
+Next.js rebuild of [kinzokutrade.com](https://www.kinzokutrade.com), following
+`docs/Kinzoku Website Rebuild Plan.pdf`. Content decisions are in `docs/content-report.md`.
 
-First, run the development server:
+## Run it locally
+
+Needs Node 24 and Docker Desktop.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install                 # also prepares the database client
+cp .env.example .env        # first time only, then choose a database password (on both lines)
+npm run db:up               # start the database (Docker)
+npm run db:migrate          # create or update the tables
+npm run dev                 # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Pages work without the database; quote requests, the admin area and live chat need it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Development server with live reload |
+| `npm run build` / `npm start` | Production build / serve it |
+| `npm run lint` / `npm run typecheck` | Code checks |
+| `npm run db:up` / `npm run db:down` | Start / stop the local database (data is kept) |
+| `npm run db:migrate -- --name <change>` | After editing `prisma/schema.prisma`: record and apply the change |
+| `npm run db:deploy` | Apply recorded changes only (server) |
+| `npm run db:check` | Database check with test data that is removed afterwards |
+| `node scripts/check-urls.mjs http://localhost:3000` | Every old address, the sitemap and every internal link |
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`/api/health` answers `{"status":"ok"}` when the site and database are up (503 otherwise).

@@ -1,0 +1,26 @@
+# Local development database (Step 14). Phase 5 adds the website and Caddy for the server.
+#   npm run db:up     start (waits until the database accepts connections)
+#   npm run db:down   stop; the data stays in the "pgdata" volume until the volume is removed
+name: kinzoku
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: kinzoku
+      POSTGRES_USER: kinzoku
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env (see .env.example)}
+    ports:
+      # Reachable from this computer only, never from the network. 5433, not 5432, so it can't
+      # clash with a PostgreSQL installed directly on Windows.
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kinzoku -d kinzoku"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  pgdata:
