@@ -2,6 +2,7 @@ import { Check, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-button";
+import { BuyerChat } from "@/components/live/buyer-chat";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { quoteForm } from "@/content/quote-form";
 import { rfqStatuses, statusPage as t } from "@/content/rfq-status";
@@ -11,7 +12,7 @@ import { hashStatusToken } from "@/lib/rfq";
 import { site, whatsappHref } from "@/lib/site";
 
 // The buyer's private status page, opened from the link in their confirmation email (plan: "no
-// password, no sign-up"). Read-only for now; Step 18 adds live updates and the chat.
+// password, no sign-up"). The status updates live and the buyer can chat with the sales team.
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
@@ -96,6 +97,8 @@ export default async function RfqStatusPage({ params }: PageProps<"/rfq/status/[
               <h2 className="text-2xl">{t.summaryTitle}</h2>
               <p className="mt-3 whitespace-pre-line">{summary.join("\n")}</p>
             </div>
+
+            <BuyerChat token={token} reference={rfq.reference} />
           </div>
 
           <aside className="h-fit rounded-lg bg-mist p-6">

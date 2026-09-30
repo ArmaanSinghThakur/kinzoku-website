@@ -1,6 +1,7 @@
 import { Download } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { StaffChat } from "@/components/admin/staff-chat";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { fieldStyles } from "@/components/ui/field-styles";
@@ -105,6 +106,8 @@ export default async function RequestPage({ params }: PageProps<"/admin/requests
         </div>
 
         <div className="space-y-8">
+          <StaffChat reference={rfq.reference} buyerName={rfq.contactName} />
+
           <section>
             <h2 className="text-xl">{t.history}</h2>
             <ol className="mt-3 space-y-3 text-sm">

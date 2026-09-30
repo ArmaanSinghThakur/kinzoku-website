@@ -12,7 +12,7 @@ npm install                 # also prepares the database client
 cp .env.example .env        # first time only, then choose a database password (on both lines)
 npm run services:up         # start the database and the mail catcher (Docker)
 npm run db:migrate          # create or update the tables
-npm run dev                 # http://localhost:3000
+npm run dev                 # http://localhost:3000 (website and live connection together)
 ```
 
 Pages work without the database; quote requests, the admin area and live chat need it.
@@ -23,8 +23,8 @@ are caught by Mailpit: read them at http://localhost:8025.
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Development server with live reload |
-| `npm run build` / `npm start` | Production build / serve it |
+| `npm run dev` | Development server (server.ts: website + live chat and alerts) with live reload |
+| `npm run build` / `npm start` | Production build (site + bundled server.ts in `dist/`) / serve it |
 | `npm run lint` / `npm run typecheck` | Code checks |
 | `npm run services:up` / `npm run services:down` | Start / stop the local database and mail catcher (data is kept) |
 | `npm run db:migrate -- --name <change>` | After editing `prisma/schema.prisma`: record and apply the change |

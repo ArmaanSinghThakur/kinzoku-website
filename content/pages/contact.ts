@@ -17,6 +17,7 @@ export const contactPage = {
     title: "Office hours",
     value: "Monday–Friday, 09:00–18:00",
     reply: "We return a preliminary assessment and transparent quote within 48 hours.",
+    online: "Sales team online now",
   },
   map: {
     alt: "Map of Amsterdam, Netherlands, where Kinzoku Consultancy & Trade is based",

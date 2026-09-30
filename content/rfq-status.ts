@@ -23,6 +23,27 @@ export const statusPage = {
     whatsappMessage: (reference: string) => `Hello Kinzoku, about my request ${reference}: `,
   },
   private: "This page is private: anyone with its link can see it, so please don't share the link.",
+  chat: {
+    title: "Messages",
+    intro: "Ask the sales team anything about this request; the replies appear here.",
+    empty: "No messages yet.",
+    you: "You",
+    them: (name: string | null) => (name ? `${name}, Kinzoku` : "Kinzoku"),
+    typing: "Kinzoku is typing…",
+    placeholder: "Write a message…",
+    label: "Your message",
+    send: "Send",
+    sending: "Sending…",
+    waiting: "Not sent yet: it goes out as soon as the connection is back.",
+    sent: "Sent",
+    read: "Read",
+    live: "Connected",
+    offline: "Reconnecting…",
+    tooLong: (max: number) => `Please keep a message under ${max} characters.`,
+    rateLimited: "Please wait a moment before sending more messages.",
+    failed: "This message could not be sent. Please try again.",
+    hint: "Enter sends, Shift + Enter starts a new line.",
+  },
 };
 
 export const emails = {

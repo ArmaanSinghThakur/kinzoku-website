@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { LiveAlerts } from "@/components/admin/live-alerts";
 import { admin } from "@/content/admin";
 import { requireStaff } from "@/lib/admin-guard";
 import { logOut } from "../actions";
@@ -25,6 +26,7 @@ export default async function AdminAreaLayout({ children }: { children: ReactNod
             </nav>
           )}
           <form action={logOut} className="ml-auto flex items-center gap-3 text-sm">
+            {!me.mustChangePassword && <LiveAlerts />}
             <span className="text-white/70">{me.name}</span>
             <button type="submit" className="rounded-md border border-white/30 px-3 py-1 text-white hover:border-white">
               {t.logout}

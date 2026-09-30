@@ -2,6 +2,8 @@ import { after } from "next/server";
 import { RateLimiterMemory, RateLimiterRes } from "rate-limiter-flexible";
 import { maxFileMb, maxFiles, quoteForm as t } from "@/content/quote-form";
 import { sendDueEmails } from "@/lib/email-outbox";
+import { liveEmit } from "@/lib/live/emit";
+import { rooms, type NewRequestEvent } from "@/lib/live/protocol";
 import { validateQuote } from "@/lib/quote-validation";
 import { clientIp, isSameOrigin } from "@/lib/request";
 import { createRfq } from "@/lib/rfq";
@@ -71,6 +73,9 @@ export async function POST(request: Request) {
   try {
     saved = await saveUploads(inspected as Upload[]);
     const reference = await createRfq(checked.data, saved);
+    // Staff with the admin area open see it at once (plan: "new request alert").
+    const alert: NewRequestEvent = { reference, companyName: checked.data.companyName, type: t.type.options[checked.data.type] };
+    liveEmit(rooms.staff, "rfq:new", alert);
     // Emails go out right after the answer is sent; if that fails, the background sender retries.
     after(() => sendDueEmails().catch((error) => console.error("Sending emails after a request:", error)));
     return reply({ ok: true, reference }, 201);

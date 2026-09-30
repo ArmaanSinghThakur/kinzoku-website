@@ -2,6 +2,7 @@ import { Clock, ExternalLink, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { QuoteForm } from "@/components/contact/quote-form";
+import { SalesOnline } from "@/components/contact/sales-online";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-button";
 import { PageHeader } from "@/components/sections/page-header";
 import { buttonStyles } from "@/components/ui/button-styles";
@@ -64,6 +65,7 @@ export default function ContactPage() {
               </h2>
               <p className="mt-2 font-semibold text-charcoal">{hours.value}</p>
               <p className="mt-1 text-muted">{hours.reply}</p>
+              <SalesOnline label={hours.online} />
             </div>
           </div>
 

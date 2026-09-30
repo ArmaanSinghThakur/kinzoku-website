@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { generateRandomString, hashPassword } from "better-auth/crypto";
 import { db } from "@/lib/db";
 import type { StaffRole } from "@/lib/generated/prisma/client";
+import { disconnectStaff } from "@/lib/live/emit";
 
 // Staff accounts, managed by admins (admin area and `npm run staff:add`). There is no public
 // sign-up. New accounts and reset passwords get a temporary password that is shown once; the
@@ -36,6 +37,7 @@ export async function resetStaffPassword(id: string) {
     db.staffUser.update({ where: { id }, data: { mustChangePassword: true } }),
     db.staffSession.deleteMany({ where: { userId: id } }),
   ]);
+  disconnectStaff(id);
   return password;
 }
 
@@ -45,8 +47,10 @@ export async function setStaffActive(id: string, active: boolean) {
     db.staffUser.update({ where: { id }, data: { active } }),
     ...(active ? [] : [db.staffSession.deleteMany({ where: { userId: id } })]),
   ]);
+  if (!active) disconnectStaff(id);
 }
 
 export async function endStaffSessions(id: string) {
   await db.staffSession.deleteMany({ where: { userId: id } });
+  disconnectStaff(id);
 }

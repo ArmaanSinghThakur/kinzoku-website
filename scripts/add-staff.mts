@@ -2,7 +2,7 @@
 //   npm run staff:add -- --name "Jane Doe" --email jane@kinzokutrade.com --role admin
 // Prints a temporary password once; the person chooses their own at the first login.
 import { parseArgs } from "node:util";
-import { db } from "@/lib/db";
+import { db, isUniqueViolation } from "@/lib/db";
 import { mailSettings } from "@/lib/mailer";
 import { createStaff } from "@/lib/staff";
 
@@ -21,8 +21,7 @@ try {
   console.log(`Temporary password (shown only now): ${password}`);
   console.log(`They choose their own password at the first login: ${mailSettings.siteUrl}/admin/login`);
 } catch (error) {
-  const exists = error instanceof Error && "code" in error && error.code === "P2002";
-  console.error(exists ? `${email} already has an account.` : error);
+  console.error(isUniqueViolation(error) ? `${email} already has an account.` : error);
   process.exitCode = 1;
 } finally {
   await db.$disconnect();

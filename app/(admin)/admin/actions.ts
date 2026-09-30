@@ -8,7 +8,9 @@ import { admin as t } from "@/content/admin";
 import { rfqStatuses } from "@/content/rfq-status";
 import { requireStaff } from "@/lib/admin-guard";
 import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
+import { db, isUniqueViolation } from "@/lib/db";
+import { disconnectStaff, liveEmit } from "@/lib/live/emit";
+import { rooms, type StatusEvent } from "@/lib/live/protocol";
 import type { RfqStatus } from "@/lib/generated/prisma/client";
 import { createStaff, endStaffSessions, resetStaffPassword, setStaffActive } from "@/lib/staff";
 
@@ -19,7 +21,10 @@ const text = (form: FormData, name: string) => String(form.get(name) ?? "").trim
 const isStatus = (value: string): value is RfqStatus => value in rfqStatuses;
 
 export async function logOut() {
-  await auth.api.signOut({ headers: await headers() });
+  const requestHeaders = await headers();
+  const session = await auth.api.getSession({ headers: requestHeaders });
+  await auth.api.signOut({ headers: requestHeaders });
+  if (session) disconnectStaff(session.user.id);
   redirect("/admin/login");
 }
 
@@ -33,12 +38,19 @@ export async function setRfqStatus(form: FormData) {
   const from = text(form, "from");
   const to = text(form, "to");
   if (!isStatus(from) || !isStatus(to) || from === to) return;
-  await db.$transaction(async (tx) => {
+  const rfqId = await db.$transaction(async (tx) => {
     const { count } = await tx.rfq.updateMany({ where: { reference, status: from }, data: { status: to } });
-    if (count === 0) return;
+    if (count === 0) return null;
     const rfq = await tx.rfq.findUniqueOrThrow({ where: { reference }, select: { id: true } });
     await tx.rfqStatusChange.create({ data: { rfqId: rfq.id, fromStatus: from, toStatus: to, changedById: staff.id } });
+    return rfq.id;
   });
+  if (rfqId) {
+    // The buyer's status page and other staff update at once (plan: "request status").
+    const event: StatusEvent = { reference, status: to };
+    liveEmit(rooms.rfq(rfqId), "status", event);
+    liveEmit(rooms.staff, "rfq:status", event);
+  }
   revalidatePath(`/admin/requests/${reference}`);
 }
 
@@ -77,7 +89,7 @@ export async function addStaff(_: StaffActionState, form: FormData): Promise<Sta
     revalidatePath("/admin/staff");
     return { message: t.staff.created(email), password };
   } catch (error) {
-    if (error instanceof Error && "code" in error && error.code === "P2002") return { error: t.staff.exists };
+    if (isUniqueViolation(error)) return { error: t.staff.exists };
     throw error;
   }
 }
@@ -128,6 +140,7 @@ export async function changePassword(_: PasswordState, form: FormData): Promise<
     db.staffSession.deleteMany({ where: { userId: me.id, NOT: { id: session?.session.id } } }),
     db.staffUser.update({ where: { id: me.id }, data: { mustChangePassword: false } }),
   ]);
+  disconnectStaff(me.id); // this page reconnects by itself with its still-valid login
   if (me.mustChangePassword) redirect("/admin");
   return { done: true };
 }

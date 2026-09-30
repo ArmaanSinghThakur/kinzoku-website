@@ -48,7 +48,7 @@ export default async function RequestsPage({ searchParams }: PageProps<"/admin">
         email: true,
         type: true,
         status: true,
-        _count: { select: { files: true } },
+        _count: { select: { files: true, chatMessages: { where: { sender: "buyer", readAt: null } } } },
       },
     }),
     db.rfq.count({ where }),
@@ -96,7 +96,7 @@ export default async function RequestsPage({ searchParams }: PageProps<"/admin">
         <p className="mt-10 text-muted">{t.empty}</p>
       ) : (
         <div className="table-scroll mt-6 rounded-lg border border-line">
-          <table className="w-full min-w-[48rem] text-left text-sm">
+          <table className="w-full min-w-[52rem] text-left text-sm">
             <thead className="bg-mist text-muted">
               <tr>
                 {Object.values(t.columns).map((c) => (
@@ -119,6 +119,13 @@ export default async function RequestsPage({ searchParams }: PageProps<"/admin">
                   <td className="px-4 py-3">{quoteForm.type.options[r.type]}</td>
                   <td className="px-4 py-3"><StatusBadge status={r.status} /></td>
                   <td className="px-4 py-3">{r._count.files || "–"}</td>
+                  <td className="px-4 py-3">
+                    {r._count.chatMessages > 0 ? (
+                      <span className="rounded-full bg-danger px-2 py-0.5 text-xs font-semibold text-white">{r._count.chatMessages}</span>
+                    ) : (
+                      "–"
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
