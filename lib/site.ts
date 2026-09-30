@@ -21,6 +21,11 @@ export const site = {
   kvk: "42042968",
   vat: "NL005451507B80",
   linkedin: "https://www.linkedin.com/company/kinzokutrade/",
+  /**
+   * Google Analytics 4 ID, the only place it is set. Comes from the environment so staging and
+   * local builds send nothing; production sets NEXT_PUBLIC_GA_ID=G-J0XSVBKVJ9 (see .env.example).
+   */
+  analyticsId: process.env.NEXT_PUBLIC_GA_ID,
 } as const;
 
 /** WhatsApp chat link with a pre-filled message. A plain link: no WhatsApp code runs on the site. */

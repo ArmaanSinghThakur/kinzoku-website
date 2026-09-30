@@ -3,9 +3,26 @@ import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
 
-// Applied to every response. The Content-Security-Policy is added in the cookie/analytics
-// step, once the exact Google Analytics origins are wired in.
+// Only our own origin plus Google Analytics (Google's documented GA4 hosts), which is loaded
+// after cookie consent. 'unsafe-inline' scripts are needed because pages are pre-built
+// (nonces would force every page to render per request); 'unsafe-eval' only in dev for hot reload.
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"} https://*.googletagmanager.com`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com",
+  "font-src 'self'",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+  "frame-src 'none'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
+// Applied to every response.
 const securityHeaders = [
+  { key: "Content-Security-Policy", value: contentSecurityPolicy },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

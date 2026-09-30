@@ -42,6 +42,36 @@ export const en = {
     label: "Chat with Kinzoku on WhatsApp",
     message: "Hello Kinzoku, I would like a quote for …",
   },
+  // Matches Privacy Policy section 8: banner on site, detailed breakdown via the footer cookie link.
+  cookies: {
+    title: "Cookies on this website",
+    text: "We use strictly necessary cookies to make this website work. With your permission, we also use Google Analytics cookies to see how visitors use the site. Analytics stays off until you accept.",
+    policyLink: "Privacy Policy",
+    accept: "Accept",
+    reject: "Reject",
+    settings: "Settings",
+    panelTitle: "Cookie settings",
+    panelIntro: "Choose which cookies we may use. You can change your choice at any time via “Cookie settings” in the footer.",
+    close: "Close",
+    alwaysOn: "Always on",
+    necessary: {
+      title: "Strictly necessary",
+      text: "Needed for the website to work, such as remembering your cookie choice.",
+    },
+    analytics: {
+      title: "Analytics",
+      text: "Google Analytics counts visits and shows which pages are used, so we can improve the website.",
+    },
+    columns: { name: "Cookie", provider: "Provider", purpose: "Purpose", duration: "Duration" },
+    list: [
+      { name: "kz_consent", provider: "Kinzoku", purpose: "Remembers your cookie choice", duration: "12 months", category: "necessary" },
+      { name: "_ga", provider: "Google", purpose: "Distinguishes visitors", duration: "2 years", category: "analytics" },
+      { name: "_ga_<ID>", provider: "Google", purpose: "Keeps the state of a visit", duration: "2 years", category: "analytics" },
+    ],
+    rejectAll: "Reject all",
+    save: "Save choices",
+    acceptAll: "Accept all",
+  },
 };
 
 export type Dictionary = typeof en;

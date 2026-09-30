@@ -1,3 +1,4 @@
+import { CookieConsent } from "@/components/consent/cookie-consent";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
@@ -19,6 +20,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       </main>
       <Footer dict={en} />
       <WhatsAppButton dict={en} />
+      <CookieConsent dict={en} />
     </>
   );
 }

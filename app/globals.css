@@ -65,14 +65,15 @@
   margin: 0;
 }
 
-/* Page behind the open mobile menu (<dialog>) doesn't scroll. */
+/* Page behind an open <dialog> (mobile menu, cookie settings) doesn't scroll. */
 html:has(dialog[open]) {
   overflow: hidden;
 }
 
-/* WhatsApp button steps aside while someone is filling in a form or using the mobile menu. */
+/* WhatsApp button steps aside while a form, a dialog or the cookie banner is in use. */
 body:has(form:focus-within) .whatsapp-button,
-body:has(dialog[open]) .whatsapp-button {
+body:has(dialog[open]) .whatsapp-button,
+body:has(.cookie-banner) .whatsapp-button {
   visibility: hidden;
 }
 
