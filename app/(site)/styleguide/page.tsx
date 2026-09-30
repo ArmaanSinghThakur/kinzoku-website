@@ -8,10 +8,12 @@ import { Faq } from "@/components/ui/faq";
 import { ProcessStepper } from "@/components/ui/process-stepper";
 import { ProductCard } from "@/components/ui/product-card";
 import { QuoteBanner } from "@/components/ui/quote-banner";
+import { SectionBoundary } from "@/components/ui/section-boundary";
 import { Section } from "@/components/ui/section";
 import { SpecTable } from "@/components/ui/spec-table";
 import { Tabs } from "@/components/ui/tabs";
 import { TrustBadge } from "@/components/ui/trust-badge";
+import { CrashButton } from "./crash-button";
 
 export const metadata: Metadata = {
   title: "Styleguide",
@@ -156,6 +158,22 @@ export default function StyleguidePage() {
             category="Products"
             readingMinutes={5}
           />
+        </div>
+      </Section>
+
+      <Section title="Error handling">
+        <p className="-mt-6 mb-6 text-sm text-muted">
+          The first button breaks only its own box; the second breaks the page (header and footer stay).
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <SectionBoundary>
+            <div className="rounded-lg border border-line p-6">
+              <CrashButton label="Break this section" />
+            </div>
+          </SectionBoundary>
+          <div className="rounded-lg border border-line p-6">
+            <CrashButton label="Break the whole page" />
+          </div>
         </div>
       </Section>
 

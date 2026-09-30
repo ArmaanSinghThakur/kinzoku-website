@@ -1,4 +1,5 @@
 import { routes } from "@/lib/routes";
+import { enError } from "./en-error";
 
 // Shared interface text for header, menus and footer. Language pages (Step 12) get a copy of this
 // shape with translated strings, so the Dictionary type keeps every translation complete.
@@ -42,6 +43,18 @@ export const en = {
     label: "Chat with Kinzoku on WhatsApp",
     message: "Hello Kinzoku, I would like a quote for …",
   },
+  notFound: {
+    title: "Page not found",
+    text: "The page you are looking for does not exist or has moved. Search below, or go to one of these pages.",
+    searchLabel: "Search pages",
+    searchPlaceholder: "Search, e.g. coil nails or CBAM",
+    noResults: "No pages match your search.",
+    results: "results",
+    home: "Home",
+    products: "Products",
+    contact: "Contact",
+  },
+  error: enError,
   // Matches Privacy Policy section 8: banner on site, detailed breakdown via the footer cookie link.
   cookies: {
     title: "Cookies on this website",

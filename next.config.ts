@@ -38,6 +38,10 @@ const projectRoot = path.join(__dirname);
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    // Several root layouts (one per page language) need app/global-not-found.tsx for unknown URLs.
+    globalNotFound: true,
+  },
   turbopack: { root: projectRoot },
   outputFileTracingRoot: projectRoot,
 
