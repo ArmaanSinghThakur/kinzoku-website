@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import { buttonStyles } from "@/components/ui/button-styles";
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { languagePages } from "@/content/languages";
 import { routes } from "@/lib/routes";
 
@@ -14,7 +14,7 @@ import { routes } from "@/lib/routes";
  * Phone/tablet menu on the native <dialog> element: showModal() gives focus trapping, Esc to close,
  * an inert page behind it and focus return to the button, with no library. Scroll lock is in CSS.
  */
-export function MobileMenu({ dict }: { dict: Dictionary }) {
+export function MobileMenu({ dict }: { dict: ChromeDictionary }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const pathname = usePathname();
   const close = () => dialogRef.current?.close();

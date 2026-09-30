@@ -88,3 +88,6 @@ export const en = {
 };
 
 export type Dictionary = typeof en;
+
+/** The part every page's header, menus, footer, WhatsApp and cookie banner need; translated per language. */
+export type ChromeDictionary = Pick<Dictionary, "lang" | "skipToContent" | "nav" | "productLinks" | "footer" | "whatsapp" | "cookies">;

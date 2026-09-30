@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { buttonStyles } from "@/components/ui/button-styles";
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { getConsentSnapshot, parseConsent, saveConsent, subscribeToConsent } from "@/lib/consent";
 import { routes } from "@/lib/routes";
 import { site } from "@/lib/site";
@@ -17,7 +17,7 @@ const SETTINGS_HASH = "#cookie-settings";
  * Cookie banner + settings panel. Google Analytics is only mounted after the visitor accepts,
  * so nothing is requested from Google before that.
  */
-export function CookieConsent({ dict }: { dict: Dictionary }) {
+export function CookieConsent({ dict }: { dict: ChromeDictionary }) {
   const t = dict.cookies;
   // undefined while server-rendering / hydrating, null when no choice has been made yet.
   const raw = useSyncExternalStore(subscribeToConsent, getConsentSnapshot, () => undefined);

@@ -3,7 +3,7 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { routes } from "@/lib/routes";
 import { NavPopover } from "./nav-popover";
 
@@ -16,7 +16,7 @@ const itemClass = (active: boolean) =>
 const panelLinkClass =
   "block rounded-md px-3 py-2 text-sm text-charcoal no-underline hover:bg-mist aria-[current=page]:font-semibold";
 
-export function DesktopNav({ dict }: { dict: Dictionary }) {
+export function DesktopNav({ dict }: { dict: ChromeDictionary }) {
   const pathname = usePathname();
   const current = (href: string) => (pathname === href ? "page" : undefined);
 

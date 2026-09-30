@@ -1,24 +1,29 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { routes } from "@/lib/routes";
 import { site } from "@/lib/site";
 import { Logo } from "./logo";
 
 const linkClass = "text-white/80 no-underline transition-colors hover:text-gold";
 
-function Row({ label, children }: { label: string; children: ReactNode }) {
+function Row({ label, colon, children }: { label: string; colon: string; children: ReactNode }) {
   // Label and value on one line (the live footer splits them apart).
   return (
     <div className="flex gap-2">
-      <dt className="text-white/55">{label}:</dt>
+      <dt className="text-white/55">
+        {label}
+        {colon}
+      </dt>
       <dd>{children}</dd>
     </div>
   );
 }
 
-export function Footer({ dict }: { dict: Dictionary }) {
+export function Footer({ dict }: { dict: ChromeDictionary }) {
   const t = dict.footer;
+  // French typography puts a no-break space before a colon.
+  const colon = dict.lang.startsWith("fr") ? " :" : ":";
 
   return (
     <footer className="bg-charcoal text-sm text-white/80">
@@ -35,17 +40,17 @@ export function Footer({ dict }: { dict: Dictionary }) {
         <div>
           <h2 className="font-heading text-sm font-semibold tracking-wider text-white uppercase">{t.contact}</h2>
           <dl className="mt-4 space-y-2">
-            <Row label={t.email}>
+            <Row colon={colon} label={t.email}>
               <a href={`mailto:${site.email}`} className={linkClass}>
                 {site.email}
               </a>
             </Row>
-            <Row label={t.phone}>
+            <Row colon={colon} label={t.phone}>
               <a href={`tel:${site.phone.e164}`} className={linkClass}>
                 {site.phone.display}
               </a>
             </Row>
-            <Row label={t.linkedin}>
+            <Row colon={colon} label={t.linkedin}>
               <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className={linkClass}>
                 kinzokutrade
               </a>
@@ -56,8 +61,8 @@ export function Footer({ dict }: { dict: Dictionary }) {
         <div>
           <h2 className="font-heading text-sm font-semibold tracking-wider text-white uppercase">{t.company}</h2>
           <dl className="mt-4 space-y-2">
-            <Row label={t.kvk}>{site.kvk}</Row>
-            <Row label={t.vat}>{site.vat}</Row>
+            <Row colon={colon} label={t.kvk}>{site.kvk}</Row>
+            <Row colon={colon} label={t.vat}>{site.vat}</Row>
           </dl>
         </div>
 

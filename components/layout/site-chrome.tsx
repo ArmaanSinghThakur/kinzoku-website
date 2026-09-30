@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { CookieConsent } from "@/components/consent/cookie-consent";
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { WhatsAppButton } from "./whatsapp-button";
 
 /** Everything around a public page's content, in the page's language. */
-export function SiteChrome({ dict, children }: { dict: Dictionary; children: ReactNode }) {
+export function SiteChrome({ dict, children }: { dict: ChromeDictionary; children: ReactNode }) {
   return (
     <>
       <a

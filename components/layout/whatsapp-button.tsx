@@ -1,4 +1,4 @@
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { whatsappHref } from "@/lib/site";
 
 // WhatsApp glyph from Simple Icons (CC0). A plain link, so no WhatsApp script or cookie is loaded.
@@ -18,7 +18,7 @@ export function WhatsAppIcon({ className }: { className?: string }) {
  * 1200px content column and never covers text. Smaller screens get the header icon instead.
  * Hidden by CSS while a form, dialog or the cookie banner is in use.
  */
-export function WhatsAppButton({ dict }: { dict: Dictionary }) {
+export function WhatsAppButton({ dict }: { dict: ChromeDictionary }) {
   return (
     <a
       href={whatsappHref(dict.whatsapp.message)}

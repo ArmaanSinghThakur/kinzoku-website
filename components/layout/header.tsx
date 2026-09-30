@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/button";
-import type { Dictionary } from "@/content/i18n/en";
+import type { ChromeDictionary } from "@/content/i18n/en";
 import { routes } from "@/lib/routes";
 import { whatsappHref } from "@/lib/site";
 import { DesktopNav } from "./desktop-nav";
@@ -8,7 +8,7 @@ import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { WhatsAppIcon } from "./whatsapp-button";
 
-export function Header({ dict }: { dict: Dictionary }) {
+export function Header({ dict }: { dict: ChromeDictionary }) {
   return (
     <header className="sticky top-0 z-40 bg-charcoal">
       <div className="site-container flex h-16 items-center gap-6">

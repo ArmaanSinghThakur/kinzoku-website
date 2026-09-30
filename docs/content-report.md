@@ -55,7 +55,14 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
     Japan wire rod, India vs China); Products (Drawn wire, Bulk/coil/EPAL nails).
   - No article dates until Kinzoku supplies the real publication dates. The sitemap only has
     the site-wide republish date.
+- **Language pages** (before Step 12):
+  - Menu, footer, cookie banner and WhatsApp text are translated by the developer, then pass an
+    independent review. Kinzoku's native speakers confirm them before launch.
+  - Switcher labels: "Polski" (the page has no Czech), "Português (Brasil)" (language code
+    pt-BR) and "Africa".
+  - The broken /contactus-sales buttons now point to the contact page's quote section.
 - **Still open, for Kinzoku:**
+  - native-speaker check of the menu, footer and cookie translations
   - the §2.2 content errors
   - which images are Kinzoku's own
   - the cookie banner wording (recommendation: keep the Step 4 text)
