@@ -10,6 +10,7 @@
   --color-mist: #f4f5f7; /* alternate sections */
   --color-steel: #2f4a63; /* tables and links */
   --color-line: #e2e5e9; /* borders, table rules */
+  --color-danger: #b42318; /* form errors (5.9:1 on white) */
 
   --shadow-card: 0 1px 2px rgb(20 23 26 / 0.04), 0 2px 8px rgb(20 23 26 / 0.06);
 }

@@ -40,6 +40,11 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
   links and the approved spelling.
 - **Long Products:** new intro drafted from the table's own facts (approved). One card per
   profile. The keyword lists are kept in a closed "Cross-reference index" section.
+- **CBAM page** (before Step 9):
+  - The Google Form "CBAM Advisory Form" is replaced by a button to the contact form. Phase 4
+    builds a Kinzoku-hosted advisory form with the same 14 questions.
+  - The calculator updates as you type.
+  - "tCO_2e/t" becomes "tCO₂e/t" (approved fix).
 - **Still open, for Kinzoku:** the §2.2 content errors, which images are Kinzoku's own, and the
   cookie banner wording (recommendation: keep the Step 4 text).
 
