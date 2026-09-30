@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Kinzoku design system — colours from the rebuild plan (docs/). */
+@theme {
+  --color-charcoal: #14171a; /* header, footer */
+  --color-gold: #f2b705; /* buttons and highlights only */
+  --color-gold-hover: #d9a404;
+  --color-ink: #1f2328; /* body text */
+  --color-muted: #5a6270; /* secondary text */
+  --color-mist: #f4f5f7; /* alternate sections */
+  --color-steel: #2f4a63; /* tables and links */
+  --color-line: #e2e5e9; /* borders, table rules */
+
+  --shadow-card: 0 1px 2px rgb(20 23 26 / 0.04), 0 2px 8px rgb(20 23 26 / 0.06);
+}
+
+/* Font variables are set on <html> by next/font, so they are resolved at runtime. */
+@theme inline {
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* 1200px content column with 24px side margins on phones. */
+@utility site-container {
+  width: 100%;
+  max-width: calc(75rem + 3rem);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-base text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-bold text-charcoal;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    @apply text-steel;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-steel;
+  }
+}

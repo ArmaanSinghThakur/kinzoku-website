@@ -1,0 +1,4 @@
+# Store LF in the repo so scripts and Docker files work on the Linux server.
+* text=auto eol=lf
+*.pdf binary
+*.ico binary
