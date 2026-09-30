@@ -45,6 +45,11 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
     builds a Kinzoku-hosted advisory form with the same 14 questions.
   - The calculator updates as you type.
   - "tCO_2e/t" becomes "tCO₂e/t" (approved fix).
+- **Contact page** (before Step 10):
+  - The map is a one-time OpenStreetMap image of Amsterdam stored on our server, credited
+    "© OpenStreetMap contributors" and linking to Google Maps.
+  - Until Step 15, the #quote section offers email (pre-filled checklist from the Google Form's
+    questions) and WhatsApp. No Google Form.
 - **Still open, for Kinzoku:** the §2.2 content errors, which images are Kinzoku's own, and the
   cookie banner wording (recommendation: keep the Step 4 text).
 
