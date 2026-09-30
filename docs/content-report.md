@@ -34,6 +34,12 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
 - **§2.3 hidden pages and the old duplicate article: redirect as proposed** (added in Step 13).
 - **YouTube video:** a still image stored on our server that links to YouTube. No embed.
 - **Photos:** use the live site's product photos until Kinzoku's own arrive. No stock photos.
+- **WhatsApp button** (after Step 7): an icon in the header on phones and tablets; floating
+  button only on wide screens (≥1340px), in the empty side margin.
+- **Nail Wire page:** keep all content, including the non-nail applications. Fix only the broken
+  links and the approved spelling.
+- **Long Products:** new intro drafted from the table's own facts (approved). One card per
+  profile. The keyword lists are kept in a closed "Cross-reference index" section.
 - **Still open, for Kinzoku:** the §2.2 content errors, which images are Kinzoku's own, and the
   cookie banner wording (recommendation: keep the Step 4 text).
 

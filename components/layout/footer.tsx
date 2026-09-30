@@ -21,8 +21,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
   const t = dict.footer;
 
   return (
-    // Extra bottom padding on phones keeps the last line clear of the WhatsApp button.
-    <footer className="bg-charcoal pb-20 text-sm text-white/80 sm:pb-0">
+    <footer className="bg-charcoal text-sm text-white/80">
       <div className="site-container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo label={dict.nav.home} />
