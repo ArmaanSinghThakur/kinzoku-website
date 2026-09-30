@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Package } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 
@@ -23,11 +23,23 @@ export function ProductCard({
 }: ProductCardProps) {
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-card">
-      {image && (
-        <div className="relative aspect-[4/3] bg-mist">
-          <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-cover" />
-        </div>
-      )}
+      <div className="relative aspect-[4/3] bg-mist">
+        {image ? (
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes={sizes}
+            placeholder={typeof image.src === "string" ? "empty" : "blur"}
+            className="object-cover"
+          />
+        ) : (
+          // No photo yet (Kinzoku's own photos pending): keep the card height consistent.
+          <div className="grid h-full place-items-center">
+            <Package aria-hidden className="size-12 text-steel/30" />
+          </div>
+        )}
+      </div>
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-xl">
           <Link href={href} className="text-charcoal no-underline after:absolute after:inset-0">

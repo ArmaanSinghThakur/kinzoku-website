@@ -26,6 +26,17 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
 - **Site data:** structured data for Google (`_site-jsonld.json`, whose phone number is wrong:
   it ends in 85 instead of 86) and the live cookie banner settings (`_site-settings.json`).
 
+## Decisions taken (2026-10-01)
+
+- **§2.1 clear spelling and grammar fixes: approved.** Applied while building each page. §2.2
+  content errors, testimonials and "check" items stay as on the live site until Kinzoku confirms.
+  The Privacy Policy is untouched.
+- **§2.3 hidden pages and the old duplicate article: redirect as proposed** (added in Step 13).
+- **YouTube video:** a still image stored on our server that links to YouTube. No embed.
+- **Photos:** use the live site's product photos until Kinzoku's own arrive. No stock photos.
+- **Still open, for Kinzoku:** the §2.2 content errors, which images are Kinzoku's own, and the
+  cookie banner wording (recommendation: keep the Step 4 text).
+
 ## 2. Decisions needed
 
 ### 2.1 Clear spelling and grammar fixes (recommended: approve all)
