@@ -13,6 +13,7 @@ const TEST_YEARS = [2098, 2099];
 const TABLES = [
   "staff_users", "companies", "rfqs", "rfq_reference_counters", "rfq_files",
   "rfq_status_history", "chat_messages", "cbam_estimates", "email_outbox",
+  "staff_sessions", "staff_accounts", "auth_verifications",
 ];
 
 let failed = false;
@@ -65,7 +66,7 @@ async function main() {
   });
 
   const staff = await db.staffUser.create({
-    data: { email: `sales${TEST_EMAIL}`, name: "DB check staff", passwordHash: "not-a-real-hash" },
+    data: { email: `sales${TEST_EMAIL}`, name: "DB check staff" },
   });
   const company = await db.company.create({
     data: { name: "DB check client", country: "Netherlands", clientSince: new Date("2026-01-01") },

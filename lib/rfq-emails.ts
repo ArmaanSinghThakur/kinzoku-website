@@ -1,15 +1,13 @@
 import { quoteForm as t } from "@/content/quote-form";
 import { emails } from "@/content/rfq-status";
-import type { Prisma } from "@/lib/generated/prisma/client";
 import { mailSettings } from "@/lib/mailer";
+import { rfqAnswers as answers, type RfqWithFiles } from "@/lib/rfq-answers";
 import { site } from "@/lib/site";
 import { uploadPath } from "@/lib/uploads";
 
 // The two emails sent for each quote request: the buyer's confirmation with their private status
 // link, and the alert to the sales team with every answer and the attached files. Each has a plain
 // text and an HTML version; everything the buyer typed is escaped in the HTML.
-
-type RfqWithFiles = Prisma.RfqGetPayload<{ include: { files: true } }>;
 
 /** Attach the files to the sales alert up to this total (mail servers refuse very large emails). */
 const maxAttachmentBytes = 20 * 1024 * 1024;
@@ -19,34 +17,6 @@ const escapeHtml = (text: string) =>
   text.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 /** Email subjects are one line, whatever was typed into the form. */
 const oneLine = (text: string) => text.replace(/\s+/g, " ").trim();
-const shortLabel = (label: string) => label.replace(/ \(choose any\)$/, "");
-
-/** Every answer, labelled as in the form; unanswered questions are left out. */
-function answers(rfq: RfqWithFiles): [string, string][] {
-  const details = (rfq.details ?? {}) as Record<string, string | string[] | undefined>;
-  const list = (value: string | string[] | undefined) => (Array.isArray(value) ? value.join(", ") : value);
-  const specification =
-    rfq.type === "nails" || rfq.type === "wire" || rfq.type === "bars" ? t.specification[rfq.type].label : "Specification";
-  const rows: [string, string | null | undefined][] = [
-    [t.type.label, t.type.options[rfq.type]],
-    [t.companyName.label, rfq.companyName],
-    [t.contactName.label, rfq.contactName],
-    [t.email.label, rfq.email],
-    [t.phone.label, rfq.phone],
-    [shortLabel(t.products.label), list(details.products)],
-    [shortLabel(t.finishes.label), list(details.finishes)],
-    [specification, rfq.specification],
-    [t.dimensions.label, list(details.dimensions)],
-    [t.quantity.label, rfq.quantity],
-    [t.targetPrice.label, list(details.targetPrice)],
-    [t.deliveryCountry.label, rfq.deliveryCountry],
-    [t.deliveryTerms.label, rfq.deliveryTerms],
-    [t.leadTime.label, list(details.leadTime)],
-    ["Message", rfq.message],
-    [emails.sales.files, rfq.files.map((f) => f.fileName).join(", ")],
-  ];
-  return rows.filter((row): row is [string, string] => Boolean(row[1]));
-}
 
 const signature = [
   site.name,
@@ -131,12 +101,21 @@ export function salesAlert(rfq: RfqWithFiles) {
   const attach = rfq.files.length > 0 && rfq.files.reduce((sum, f) => sum + f.sizeBytes, 0) <= maxAttachmentBytes;
   const filesNote = rfq.files.length === 0 ? [] : [attach ? s.filesAttached : s.filesTooLarge];
   const intro = s.intro(rfq.reference, dateTime.format(rfq.createdAt));
+  const adminUrl = `${mailSettings.siteUrl}/admin/requests/${rfq.reference}`;
   return {
     to: mailSettings.salesEmail,
     replyTo: { name: oneLine(rfq.contactName), address: rfq.email },
     subject: oneLine(s.subject(rfq.reference, t.type.options[rfq.type], rfq.companyName)),
-    text: [intro, s.reply, ...filesNote, "", textTable(rows)].join("\n"),
-    html: htmlLayout([p(intro, "font-weight:bold"), p(s.reply), ...filesNote.map((n) => p(n)), htmlTable(rows)].join("\n")),
+    text: [intro, s.reply, ...filesNote, `${s.open} ${adminUrl}`, "", textTable(rows)].join("\n"),
+    html: htmlLayout(
+      [
+        p(intro, "font-weight:bold"),
+        p(s.reply),
+        ...filesNote.map((n) => p(n)),
+        `<p style="margin:0 0 12px">${escapeHtml(s.open)} <a href="${escapeHtml(adminUrl)}" style="color:#2f4a63">${escapeHtml(rfq.reference)}</a></p>`,
+        htmlTable(rows),
+      ].join("\n"),
+    ),
     attachments: attach
       ? rfq.files.map((f) => ({ filename: f.fileName, path: uploadPath(f.storagePath), contentType: f.mimeType }))
       : [],

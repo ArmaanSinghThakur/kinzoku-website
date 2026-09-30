@@ -42,6 +42,7 @@ export const emails = {
     subject: (reference: string, type: string, company: string) => `New request ${reference}: ${type} – ${company}`,
     intro: (reference: string, date: string) => `New quote request ${reference}, received ${date}.`,
     reply: "Reply to this email to answer the buyer directly.",
+    open: "Open in the admin area:",
     filesAttached: "The files are attached.",
     filesTooLarge: "The files are too large to attach; they are saved with the request on the server.",
     received: "Received",

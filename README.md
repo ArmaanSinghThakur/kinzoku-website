@@ -30,6 +30,8 @@ are caught by Mailpit: read them at http://localhost:8025.
 | `npm run db:migrate -- --name <change>` | After editing `prisma/schema.prisma`: record and apply the change |
 | `npm run db:deploy` | Apply recorded changes only (server) |
 | `npm run db:check` | Database check with test data that is removed afterwards |
+| `npm run staff:add -- --name "Jane Doe" --email jane@kinzokutrade.com --role admin` | Add a staff member; prints a temporary password once |
 | `node scripts/check-urls.mjs http://localhost:3000` | Every old address, the sitemap and every internal link |
 
+The staff admin area is at `/admin` (log in with an account made by `staff:add`).
 `/api/health` answers `{"status":"ok"}` when the site and database are up (503 otherwise).

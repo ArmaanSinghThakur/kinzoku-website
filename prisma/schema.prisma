@@ -59,25 +59,83 @@ enum ChatSender {
   @@map("chat_sender")
 }
 
-/// Kinzoku team members who log in to the admin area.
+/// Kinzoku team members who log in to the admin area. Login, sessions and password hashing are
+/// Better Auth's (lib/auth.ts); the field names below are the ones it expects.
 model StaffUser {
-  id           String    @id @default(uuid(7)) @db.Uuid
+  id                 String    @id @default(uuid(7)) @db.Uuid
   /// Stored in lower case, so each address can only exist once.
-  email        String    @unique @db.VarChar(254)
-  name         String    @db.VarChar(200)
-  /// One-way password hash (set in Step 17), never the password itself.
-  passwordHash String    @map("password_hash")
-  role         StaffRole @default(sales)
-  /// Switched off instead of deleted, so their name stays on past messages.
-  active       Boolean   @default(true)
-  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz(3)
-  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  email              String    @unique @db.VarChar(254)
+  name               String    @db.VarChar(200)
+  emailVerified      Boolean   @default(false) @map("email_verified")
+  image              String?
+  role               StaffRole @default(sales)
+  /// Switched off instead of deleted, so their name stays on past messages. Can't log in.
+  active             Boolean   @default(true)
+  /// New accounts and passwords reset by an admin: the person must choose their own first.
+  mustChangePassword Boolean   @default(true) @map("must_change_password")
+  lastLoginAt        DateTime? @map("last_login_at") @db.Timestamptz(3)
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
 
+  sessions      StaffSession[]
+  accounts      StaffAccount[]
   statusChanges RfqStatusChange[]
   chatMessages  ChatMessage[]
 
   @@map("staff_users")
+}
+
+/// Logged-in staff sessions. Deleting a row logs that person out at once.
+model StaffSession {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  token     String   @unique
+  userId    String   @map("user_id") @db.Uuid
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(3)
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user StaffUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("staff_sessions")
+}
+
+/// How a staff member logs in. For email and password (the only way used) "password" holds the
+/// one-way hash, never the password itself. The other columns are part of Better Auth's layout.
+model StaffAccount {
+  id                    String    @id @default(uuid(7)) @db.Uuid
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id") @db.Uuid
+  password              String?
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at") @db.Timestamptz(3)
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at") @db.Timestamptz(3)
+  scope                 String?
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user StaffUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("staff_accounts")
+}
+
+/// Short-lived codes Better Auth may need (part of its layout; unused by email and password login).
+model AuthVerification {
+  id         String   @id @default(uuid(7)) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at") @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([identifier])
+  @@map("auth_verifications")
 }
 
 /// Buyers who became clients. Requests linked to a client are kept 7 years instead of 12 months.
