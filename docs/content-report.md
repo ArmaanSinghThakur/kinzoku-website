@@ -50,8 +50,16 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
     "© OpenStreetMap contributors" and linking to Google Maps.
   - Until Step 15, the #quote section offers email (pre-filled checklist from the Google Form's
     questions) and WhatsApp. No Google Form.
-- **Still open, for Kinzoku:** the §2.2 content errors, which images are Kinzoku's own, and the
-  cookie banner wording (recommendation: keep the Step 4 text).
+- **Blog** (before Step 11):
+  - Groups: CBAM (Guide, Indian default values, Risk leverage); Sourcing (How We Work, EU quota,
+    Japan wire rod, India vs China); Products (Drawn wire, Bulk/coil/EPAL nails).
+  - No article dates until Kinzoku supplies the real publication dates. The sitemap only has
+    the site-wide republish date.
+- **Still open, for Kinzoku:**
+  - the §2.2 content errors
+  - which images are Kinzoku's own
+  - the cookie banner wording (recommendation: keep the Step 4 text)
+  - the article publication dates
 
 ## 2. Decisions needed
 
