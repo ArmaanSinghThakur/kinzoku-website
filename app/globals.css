@@ -59,9 +59,20 @@
   }
 }
 
+/* Native popover menus: drop the browser's centred default; NavPopover sets top/left on open. */
+.nav-popover {
+  inset: auto;
+  margin: 0;
+}
+
+/* Page behind the open mobile menu (<dialog>) doesn't scroll. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 /* WhatsApp button steps aside while someone is filling in a form or using the mobile menu. */
 body:has(form:focus-within) .whatsapp-button,
-body:has([role="dialog"]) .whatsapp-button {
+body:has(dialog[open]) .whatsapp-button {
   visibility: hidden;
 }
 
@@ -81,6 +92,13 @@ body:has([role="dialog"]) .whatsapp-button {
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
     }
+  }
+
+  /* Menus fade in when opened. */
+  .nav-popover:popover-open,
+  dialog[open],
+  dialog[open]::backdrop {
+    animation: fade-in 150ms ease-out;
   }
 
   /* Smooth open/close for FAQ <details>. */

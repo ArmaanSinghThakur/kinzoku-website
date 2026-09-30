@@ -6,7 +6,11 @@ const twMerge = extendTailwindMerge({
   extend: { theme: { shadow: ["card"] } },
 });
 
-/** Join class names; later Tailwind classes override earlier conflicting ones. */
+/**
+ * Join class names; later Tailwind classes override earlier conflicting ones.
+ * For server components. In "use client" files use `clsx` directly: importing this there
+ * ships tailwind-merge (~7 KB gzipped) to every visitor.
+ */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

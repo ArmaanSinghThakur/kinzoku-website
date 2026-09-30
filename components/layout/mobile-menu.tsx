@@ -1,60 +1,73 @@
 "use client";
 
+import { clsx } from "clsx";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Dialog } from "radix-ui";
-import { buttonStyles } from "@/components/ui/button";
+import { useRef } from "react";
+import { buttonStyles } from "@/components/ui/button-styles";
 import type { Dictionary } from "@/content/i18n/en";
 import { languagePages } from "@/content/languages";
-import { cn } from "@/lib/cn";
 import { routes } from "@/lib/routes";
 
-/** Phone/tablet menu. Radix Dialog handles focus trapping, Esc to close and page scroll lock. */
+/**
+ * Phone/tablet menu on the native <dialog> element: showModal() gives focus trapping, Esc to close,
+ * an inert page behind it and focus return to the button, with no library. Scroll lock is in CSS.
+ */
 export function MobileMenu({ dict }: { dict: Dictionary }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const pathname = usePathname();
+  const close = () => dialogRef.current?.close();
 
-  // Dialog.Close around each link closes the panel as the visitor navigates.
   const item = (href: string, label: string, className?: string) => (
-    <Dialog.Close asChild>
-      <Link
-        href={href}
-        aria-current={pathname === href ? "page" : undefined}
-        className={cn(
-          "block rounded-md px-3 py-2.5 text-charcoal no-underline hover:bg-mist aria-[current=page]:font-semibold",
-          className,
-        )}
-      >
-        {label}
-      </Link>
-    </Dialog.Close>
+    <Link
+      href={href}
+      onClick={close}
+      aria-current={pathname === href ? "page" : undefined}
+      className={clsx(
+        "block rounded-md px-3 py-2.5 text-charcoal no-underline hover:bg-mist aria-[current=page]:font-semibold",
+        className,
+      )}
+    >
+      {label}
+    </Link>
   );
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger
+    <>
+      <button
+        type="button"
         aria-label={dict.nav.openMenu}
+        aria-haspopup="dialog"
+        onClick={() => dialogRef.current?.showModal()}
         className="grid size-10 cursor-pointer place-items-center rounded-md text-white hover:bg-white/10 lg:hidden"
       >
         <Menu aria-hidden className="size-6" />
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-charcoal/60 motion-safe:animate-[fade-in_150ms_ease-out]" />
-        <Dialog.Content
-          aria-describedby={undefined}
-          className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col overflow-y-auto bg-white shadow-card motion-safe:animate-[fade-in_150ms_ease-out]"
-        >
+      </button>
+
+      <dialog
+        ref={dialogRef}
+        aria-labelledby="mobile-menu-title"
+        // A click that lands on the dialog itself (not its content) is a click on the backdrop.
+        onClick={(event) => event.target === event.currentTarget && close()}
+        className="mobile-menu fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-full max-w-sm bg-white p-0 shadow-card backdrop:bg-charcoal/60"
+      >
+        <div className="flex h-full flex-col">
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-6">
-            <Dialog.Title className="font-heading font-bold text-charcoal">{dict.nav.menu}</Dialog.Title>
-            <Dialog.Close
+            <h2 id="mobile-menu-title" className="text-base">
+              {dict.nav.menu}
+            </h2>
+            <button
+              type="button"
               aria-label={dict.nav.closeMenu}
+              onClick={close}
               className="grid size-10 cursor-pointer place-items-center rounded-md text-charcoal hover:bg-mist"
             >
               <X aria-hidden className="size-6" />
-            </Dialog.Close>
+            </button>
           </div>
 
-          <nav aria-label={dict.nav.label} className="flex-1 px-3 py-4">
+          <nav aria-label={dict.nav.label} className="flex-1 overflow-y-auto px-3 py-4">
             {item(routes.about, dict.nav.about)}
             <p className="px-3 pt-4 pb-1 font-heading text-xs font-semibold tracking-wider text-muted uppercase">
               {dict.nav.products}
@@ -74,30 +87,27 @@ export function MobileMenu({ dict }: { dict: Dictionary }) {
             <ul className="grid grid-cols-2 gap-x-2">
               {languagePages.map((page) => (
                 <li key={page.href}>
-                  <Dialog.Close asChild>
-                    <Link
-                      href={page.href}
-                      hrefLang={page.lang}
-                      lang={page.lang}
-                      className="block rounded-md px-3 py-2 text-sm text-charcoal no-underline hover:bg-mist"
-                    >
-                      {page.label}
-                    </Link>
-                  </Dialog.Close>
+                  <Link
+                    href={page.href}
+                    hrefLang={page.lang}
+                    lang={page.lang}
+                    onClick={close}
+                    className="block rounded-md px-3 py-2 text-sm text-charcoal no-underline hover:bg-mist"
+                  >
+                    {page.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
           <div className="border-t border-line p-6">
-            <Dialog.Close asChild>
-              <Link href={routes.quote} className={cn(buttonStyles(), "w-full")}>
-                {dict.nav.quote}
-              </Link>
-            </Dialog.Close>
+            <Link href={routes.quote} onClick={close} className={clsx(buttonStyles(), "w-full")}>
+              {dict.nav.quote}
+            </Link>
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </div>
+      </dialog>
+    </>
   );
 }
