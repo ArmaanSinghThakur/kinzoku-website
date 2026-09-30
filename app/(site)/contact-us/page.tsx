@@ -1,15 +1,13 @@
-import { Clock, ExternalLink } from "lucide-react";
+import { Clock, ExternalLink, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Suspense } from "react";
-import { QuoteEmailButton, QuoteEmailLink } from "@/components/contact/quote-email-button";
+import { QuoteForm } from "@/components/contact/quote-form";
 import { WhatsAppIcon } from "@/components/layout/whatsapp-button";
 import { PageHeader } from "@/components/sections/page-header";
 import { buttonStyles } from "@/components/ui/button-styles";
 import { Section } from "@/components/ui/section";
 import { contactPage as page } from "@/content/pages/contact";
 import mapImage from "@/public/images/map-amsterdam.jpg";
-import { quoteMailto } from "@/lib/quote-mailto";
 import { routes } from "@/lib/routes";
 import { site, whatsappHref } from "@/lib/site";
 
@@ -21,7 +19,6 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   const { details, hours, map, quote } = page;
-  const mail = { email: site.email, subject: quote.email.subject, fields: quote.fields, deliveryOptions: quote.deliveryOptions };
 
   return (
     <>
@@ -91,26 +88,30 @@ export default function ContactPage() {
       </Section>
 
       <Section id={quote.id} tone="mist" title={quote.title} intro={quote.intro}>
-        <ol className="grid list-decimal gap-x-10 gap-y-2 pl-6 marker:text-steel md:grid-cols-2">
-          {quote.fields.map((field) => (
-            <li key={field}>{field}</li>
-          ))}
-        </ol>
-        <p className="mt-4 text-sm text-muted">{quote.deliveryOptions.join(" · ")}</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          {/* Pre-built fallback: the same link without a product name, until the page reads ?product=. */}
-          <Suspense fallback={<QuoteEmailLink label={quote.email.label} href={quoteMailto(mail)} />}>
-            <QuoteEmailButton {...mail} label={quote.email.label} products={quote.products} />
-          </Suspense>
-          <a
-            href={whatsappHref(quote.whatsapp.message)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={buttonStyles({ variant: "secondary" })}
-          >
-            <WhatsAppIcon className="size-5" />
-            {quote.whatsapp.label}
-          </a>
+        <div className="grid items-start gap-8 lg:grid-cols-[2fr_1fr]">
+          <QuoteForm email={site.email} />
+          <aside className="rounded-lg border border-line bg-white/60 p-6">
+            <h3 className="text-lg">{quote.other.title}</h3>
+            <p className="mt-2 text-muted">{quote.other.text}</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a
+                href={`mailto:${site.email}?subject=${encodeURIComponent(quote.other.email.subject)}`}
+                className={buttonStyles({ variant: "secondary" })}
+              >
+                <Mail aria-hidden className="size-5" />
+                {quote.other.email.label}
+              </a>
+              <a
+                href={whatsappHref(quote.other.whatsapp.message)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonStyles({ variant: "secondary" })}
+              >
+                <WhatsAppIcon className="size-5" />
+                {quote.other.whatsapp.label}
+              </a>
+            </div>
+          </aside>
         </div>
       </Section>
     </>

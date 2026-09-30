@@ -50,6 +50,15 @@ waits for approval. Line numbers refer to the files in `content/_source/`.
     "© OpenStreetMap contributors" and linking to Google Maps.
   - Until Step 15, the #quote section offers email (pre-filled checklist from the Google Form's
     questions) and WhatsApp. No Google Form.
+  - Step 15: Kinzoku's own quote form replaces that checklist (text in `content/quote-form.ts`).
+    - It asks all 10 questions of the Google Form "Request a Quote".
+    - The product and finish choices come from the product pages.
+    - **One new question:** "Delivery terms (Incoterms)", optional, with the choices CIF, CFR, DAP,
+      DDP, FCA and FOB. It fills the "delivery terms" field of the plan's request table. Kinzoku
+      can drop it or change the choices.
+    - The "CBAM advisory" choice asks only for contact details and a message. The full
+      14-question advisory form is still to come.
+    - Email and WhatsApp stay next to the form.
 - **Blog** (before Step 11):
   - Groups: CBAM (Guide, Indian default values, Risk leverage); Sourcing (How We Work, EU quota,
     Japan wire rod, India vs China); Products (Drawn wire, Bulk/coil/EPAL nails).

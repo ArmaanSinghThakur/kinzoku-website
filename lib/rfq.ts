@@ -1,5 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
+import { db } from "@/lib/db";
 import type { Prisma } from "@/lib/generated/prisma/client";
+import type { QuoteRequest } from "@/lib/quote-validation";
 
 /**
  * Secret for the buyer's private status link (/rfq/status/<token>). 32 random bytes; the token is
@@ -27,4 +29,57 @@ export async function nextRfqReference(tx: Prisma.TransactionClient, year = new 
     update: { lastNumber: { increment: 1 } },
   });
   return `KZ-${year}-${String(lastNumber).padStart(4, "0")}`;
+}
+
+type SavedFile = { fileName: string; storagePath: string; mimeType: string; sizeBytes: number };
+
+/**
+ * Saves a checked quote request with its first status entry and its files' records, all or
+ * nothing. Returns the reference and the status link secret (for the buyer's email only).
+ */
+export async function createRfq(request: QuoteRequest, files: SavedFile[]) {
+  const { token, hash } = newStatusToken();
+  const { type, companyName, contactName, email, phone, message } = request;
+  const product =
+    "specification" in request
+      ? {
+          deliveryCountry: request.deliveryCountry,
+          specification: request.specification,
+          quantity: request.quantity,
+          deliveryTerms: request.deliveryTerms,
+          details: withoutEmpty({
+            products: request.products,
+            finishes: request.finishes,
+            dimensions: request.dimensions,
+            targetPrice: request.targetPrice,
+            leadTime: request.leadTime,
+          }),
+        }
+      : {};
+  const { reference } = await db.$transaction(async (tx) =>
+    tx.rfq.create({
+      data: {
+        reference: await nextRfqReference(tx),
+        type,
+        companyName,
+        contactName,
+        email,
+        phone,
+        message,
+        ...product,
+        statusTokenHash: hash,
+        statusHistory: { create: { toStatus: "received" } },
+        files: { create: files },
+      },
+      select: { reference: true },
+    }),
+  );
+  return { reference, token };
+}
+
+/** Leaves out unanswered questions (and empty lists) so details only holds real answers. */
+function withoutEmpty(answers: Record<string, string | string[] | undefined>) {
+  return Object.fromEntries(
+    Object.entries(answers).filter(([, value]) => value !== undefined && value.length > 0),
+  ) as Record<string, string | string[]>;
 }

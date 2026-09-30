@@ -40,6 +40,9 @@ yarn-error.log*
 # prisma client (made by `prisma generate`, runs after npm install)
 /lib/generated/
 
+# quote request attachments (local development)
+/storage/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

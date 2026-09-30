@@ -2,15 +2,13 @@
 
 import { useId, useRef, useState, type FormEvent } from "react";
 import { buttonStyles } from "@/components/ui/button-styles";
+import { fieldErrorStyles, fieldStyles } from "@/components/ui/field-styles";
 import type { cbamPage } from "@/content/pages/cbam";
 import { estimateCbam, formatCbam } from "@/lib/cbam";
 
 type Text = (typeof cbamPage)["calculator"];
 
 const toNumber = (value: string) => (value.trim() === "" ? NaN : Number(value));
-
-const fieldClass =
-  "mt-1.5 w-full rounded-lg border bg-white px-4 py-3 text-base text-ink focus:outline-2 focus:outline-offset-0 focus:outline-steel";
 
 /**
  * CBAM liability calculator. Results update as soon as the inputs are valid; errors appear next
@@ -55,7 +53,7 @@ export function CbamCalculator({ t }: { t: Text }) {
             id={`${id}-route`}
             value={route}
             onChange={(e) => setRoute(Number(e.target.value))}
-            className={`${fieldClass} border-line`}
+            className={fieldStyles()}
           >
             {t.routes.map((r, i) => (
               <option key={r.label} value={i}>
@@ -82,10 +80,10 @@ export function CbamCalculator({ t }: { t: Text }) {
             onBlur={() => setTouched((s) => ({ ...s, tonnes: true }))}
             aria-invalid={tonnesError ? true : undefined}
             aria-describedby={tonnesError ? `${id}-tonnes-error` : undefined}
-            className={`${fieldClass} ${tonnesError ? "border-danger" : "border-line"}`}
+            className={fieldStyles(!!tonnesError)}
           />
           {tonnesError && (
-            <p id={`${id}-tonnes-error`} className="mt-1.5 text-sm font-semibold text-danger">
+            <p id={`${id}-tonnes-error`} className={fieldErrorStyles}>
               {tonnesError}
             </p>
           )}
@@ -107,10 +105,10 @@ export function CbamCalculator({ t }: { t: Text }) {
             onBlur={() => setTouched((s) => ({ ...s, price: true }))}
             aria-invalid={priceError ? true : undefined}
             aria-describedby={priceError ? `${id}-price-error` : undefined}
-            className={`${fieldClass} ${priceError ? "border-danger" : "border-line"}`}
+            className={fieldStyles(!!priceError)}
           />
           {priceError && (
-            <p id={`${id}-price-error`} className="mt-1.5 text-sm font-semibold text-danger">
+            <p id={`${id}-price-error`} className={fieldErrorStyles}>
               {priceError}
             </p>
           )}

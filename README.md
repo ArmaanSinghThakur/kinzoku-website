@@ -16,6 +16,7 @@ npm run dev                 # http://localhost:3000
 ```
 
 Pages work without the database; quote requests, the admin area and live chat need it.
+Files attached to quote requests are saved in `storage/uploads` (not in git).
 
 ## Commands
 
