@@ -36,7 +36,7 @@ export function PageSearch({ pages, label, placeholder, noResults, resultsLabel 
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             autoComplete="off"
-            className="w-full rounded-lg border border-line bg-white py-3 pr-4 pl-12 text-base text-ink placeholder:text-muted focus:border-steel focus:outline-2 focus:outline-offset-0 focus:outline-steel"
+            className="w-full rounded-xl border border-line bg-white py-3.5 pr-4 pl-12 text-base text-graphite shadow-card placeholder:text-muted focus:border-forge focus:shadow-[0_0_0_3px_rgb(47_74_99/0.16)] focus:outline-hidden"
           />
         </div>
       </form>
@@ -46,18 +46,18 @@ export function PageSearch({ pages, label, placeholder, noResults, resultsLabel 
       </p>
       {words.length > 0 &&
         (results.length ? (
-          <ul className="mt-3 divide-y divide-line rounded-lg border border-line bg-white">
+          <ul className="mt-3 divide-y divide-line overflow-hidden rounded-xl border border-line bg-white shadow-card">
             {results.map((page) => (
               <li key={page.href}>
                 <Link
                   href={page.href}
-                  className="flex items-center justify-between gap-4 px-4 py-3 text-charcoal no-underline hover:bg-mist"
+                  className="flex items-center justify-between gap-4 px-4 py-3 text-graphite no-underline transition-colors hover:bg-mist/60"
                 >
                   <span>
                     {page.title}
-                    <span className="ml-2 text-xs text-muted">{page.group}</span>
+                    <span className="spec-label ml-2 text-muted">{page.group}</span>
                   </span>
-                  <ArrowRight aria-hidden className="size-4 shrink-0 text-steel" />
+                  <ArrowRight aria-hidden className="size-4 shrink-0 text-forge" />
                 </Link>
               </li>
             ))}

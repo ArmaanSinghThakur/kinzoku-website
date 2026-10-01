@@ -22,6 +22,11 @@ export const site = {
   vat: "NL005451507B80",
   linkedin: "https://www.linkedin.com/company/kinzokutrade/",
   /**
+   * The small 金属 ("metal") seal in the footer. The redesign plan shows it "if approved" by
+   * Kinzoku: set to false to remove it everywhere.
+   */
+  nameSeal: true,
+  /**
    * Google Analytics 4 ID, the only place it is set. Comes from the environment so staging and
    * local builds send nothing; production sets NEXT_PUBLIC_GA_ID=G-J0XSVBKVJ9 (see .env.example).
    */

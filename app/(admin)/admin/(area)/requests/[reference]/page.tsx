@@ -56,7 +56,7 @@ export default async function RequestPage({ params }: PageProps<"/admin/requests
       </p>
 
       <div className="mt-5 flex flex-wrap items-center gap-2">
-        <span className="text-sm font-semibold text-charcoal">{t.moveTo}</span>
+        <span className="text-sm font-semibold text-graphite">{t.moveTo}</span>
         {statuses
           .filter((s) => s !== rfq.status)
           .map((s) => (
@@ -113,7 +113,7 @@ export default async function RequestPage({ params }: PageProps<"/admin/requests
             <ol className="mt-3 space-y-3 text-sm">
               {rfq.statusHistory.map((h) => (
                 <li key={h.id}>
-                  <span className="font-semibold text-charcoal">
+                  <span className="font-semibold text-graphite">
                     {h.fromStatus ? `${rfqStatuses[h.fromStatus]} → ${rfqStatuses[h.toStatus]}` : t.arrived}
                   </span>
                   <span className="block text-muted">
@@ -130,7 +130,7 @@ export default async function RequestPage({ params }: PageProps<"/admin/requests
             <ul className="mt-3 space-y-2 text-sm">
               {rfq.emails.map((e) => (
                 <li key={e.id}>
-                  <span className="font-semibold text-charcoal">{t.emailKinds[e.kind]}</span>
+                  <span className="font-semibold text-graphite">{t.emailKinds[e.kind]}</span>
                   <span className={e.sentAt ? "block text-muted" : "block text-danger"}>
                     {e.sentAt ? t.emailSent(when.format(e.sentAt)) : t.emailWaiting(e.attempts)}
                     {!e.sentAt && e.lastError && ` – ${e.lastError}`}
@@ -148,12 +148,12 @@ export default async function RequestPage({ params }: PageProps<"/admin/requests
               <>
                 <p className="mt-2 text-sm text-muted">{t.notClient}</p>
                 <details className="mt-3 rounded-lg border border-line p-4">
-                  <summary className="cursor-pointer font-semibold text-charcoal">{t.markClient}</summary>
+                  <summary className="cursor-pointer font-semibold text-graphite">{t.markClient}</summary>
                   <form action={markAsClient} className="mt-4 space-y-4">
                     <input type="hidden" name="reference" value={rfq.reference} />
                     {companies.length > 0 && (
                       <div>
-                        <label htmlFor="companyId" className="text-sm font-semibold text-charcoal">{t.client}</label>
+                        <label htmlFor="companyId" className="text-sm font-semibold text-graphite">{t.client}</label>
                         <select id="companyId" name="companyId" defaultValue="" className={fieldStyles()}>
                           <option value="">+ {t.company.name}</option>
                           {companies.map((c) => (
@@ -163,21 +163,21 @@ export default async function RequestPage({ params }: PageProps<"/admin/requests
                       </div>
                     )}
                     <div>
-                      <label htmlFor="name" className="text-sm font-semibold text-charcoal">{t.company.name}</label>
+                      <label htmlFor="name" className="text-sm font-semibold text-graphite">{t.company.name}</label>
                       <input id="name" name="name" defaultValue={rfq.companyName} maxLength={200} className={fieldStyles()} />
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
-                        <label htmlFor="country" className="text-sm font-semibold text-charcoal">{t.company.country}</label>
+                        <label htmlFor="country" className="text-sm font-semibold text-graphite">{t.company.country}</label>
                         <input id="country" name="country" maxLength={100} className={fieldStyles()} />
                       </div>
                       <div>
-                        <label htmlFor="vat" className="text-sm font-semibold text-charcoal">{t.company.vat}</label>
+                        <label htmlFor="vat" className="text-sm font-semibold text-graphite">{t.company.vat}</label>
                         <input id="vat" name="vat" maxLength={30} className={fieldStyles()} />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="since" className="text-sm font-semibold text-charcoal">{t.company.since}</label>
+                      <label htmlFor="since" className="text-sm font-semibold text-graphite">{t.company.since}</label>
                       <input id="since" name="since" type="date" defaultValue={today} className={fieldStyles()} />
                     </div>
                     <button type="submit" className={buttonStyles({ size: "sm" })}>{t.company.submit}</button>

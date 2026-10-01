@@ -3,6 +3,12 @@
 Next.js rebuild of [kinzokutrade.com](https://www.kinzokutrade.com), following
 `docs/Kinzoku Website Rebuild Plan.pdf`. Content decisions are in `docs/content-report.md`.
 
+The look follows `docs/Kinzoku Website — UI UX Redesign Plan.pdf` ("Precision Pastel"): colour
+and type tokens are in `app/globals.css`, fonts in `lib/fonts.ts`. Motion (Lenis smooth scroll,
+scroll reveals, background drift, card tilt, magnetic buttons, hero spotlight) is in
+`lib/motion/runtime.ts`, loaded only for visitors without a reduced-motion preference; the
+pinned "wire story" on Home uses GSAP ScrollTrigger (`components/sections/wire-story.tsx`).
+
 ## Run it locally
 
 Needs Node 24 and Docker Desktop.

@@ -49,7 +49,8 @@ test("sending it empty: a summary, a message beside each field, focus on the fir
   await page.goto("/contact-us?product=wire#quote");
   await page.click(send);
   await expect(page.locator(`${quoteForm} [role=alert]`)).toHaveText("Please check the 6 fields marked below.");
-  await expect(page.locator("#quote-companyName")).toBeFocused();
+  // Steps run product → quantity → destination → contact, so the first field to correct is the product's.
+  await expect(page.locator("#quote-specification")).toBeFocused();
   await expect(page.locator("#quote-email")).toHaveAttribute("aria-invalid", "true");
   await expect(page.locator("#quote-email-error")).toContainText("valid email");
   await expect(page.locator("#quote-email")).toHaveAttribute("aria-describedby", "quote-email-error");

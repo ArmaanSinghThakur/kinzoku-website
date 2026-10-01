@@ -9,11 +9,12 @@ export function NotFound({ dict }: { dict: Dictionary }) {
   const t = dict.notFound;
 
   return (
-    <section className="py-20 sm:py-28">
+    <section data-tone="chalk" className="relative isolate overflow-hidden py-20 sm:py-28">
+      <div aria-hidden className="wire-mesh absolute inset-0 -z-10 [mask-image:radial-gradient(circle_at_80%_30%,black,transparent_60%)]" />
       <div className="site-container">
         <div className="max-w-2xl">
-          <p className="font-heading text-sm font-semibold tracking-wider text-steel uppercase">404</p>
-          <h1 className="mt-2 text-4xl">{t.title}</h1>
+          <p className="spec-label text-forge">404</p>
+          <h1 className="load-rise mt-3 text-title">{t.title}</h1>
           <p className="mt-4 text-lg text-muted">{t.text}</p>
           <div className="mt-8">
             <PageSearch pages={pages} label={t.searchLabel} placeholder={t.searchPlaceholder} noResults={t.noResults} resultsLabel={t.results} />

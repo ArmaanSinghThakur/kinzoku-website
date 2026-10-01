@@ -36,12 +36,12 @@ export function Tabs({ items, label, syncHash = false }: TabsProps) {
       value={syncHash ? hashValue : undefined}
       onValueChange={syncHash ? selectViaHash : undefined}
     >
-      <RadixTabs.List aria-label={label} className="flex overflow-x-auto border-b border-line">
+      <RadixTabs.List aria-label={label} className="flex gap-1 overflow-x-auto border-b border-line">
         {items.map((item) => (
           <RadixTabs.Trigger
             key={item.value}
             value={item.value}
-            className="shrink-0 cursor-pointer px-4 py-3 font-heading font-semibold whitespace-nowrap text-muted transition-colors hover:text-charcoal data-[state=active]:text-charcoal data-[state=active]:shadow-[inset_0_-3px_0_var(--color-gold)]"
+            className="shrink-0 cursor-pointer rounded-t-lg px-4 py-3 font-heading font-semibold whitespace-nowrap text-muted transition-colors hover:bg-graphite/[0.04] hover:text-graphite data-[state=active]:text-graphite data-[state=active]:shadow-[inset_0_-3px_0_var(--color-forge)]"
           >
             {item.label}
           </RadixTabs.Trigger>

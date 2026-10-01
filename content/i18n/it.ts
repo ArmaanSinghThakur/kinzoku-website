@@ -38,6 +38,7 @@ export const it: ChromeDictionary = {
     jobs: "Posizioni aperte",
     privacy: "Informativa sulla privacy",
     cookies: "Impostazioni cookie",
+    nameMeaning: "Kinzoku (金属) significa «metallo» in giapponese.",
   },
   whatsapp: {
     label: "Scrivete a Kinzoku su WhatsApp",

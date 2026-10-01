@@ -219,7 +219,7 @@ export function ChatBox({
           <h2 id="chat-title" className="text-lg">{t.title}</h2>
           <p className="text-sm text-muted">{t.intro}</p>
         </div>
-        <span className={cn("mt-1 flex shrink-0 items-center gap-1.5 text-xs", connected ? "text-emerald-700" : "text-muted")}>
+        <span className={cn("mt-1 flex shrink-0 items-center gap-1.5 text-sm", connected ? "text-emerald-700" : "text-muted")}>
           <span aria-hidden className={cn("size-2 rounded-full", connected ? "bg-emerald-500" : "bg-line")} />
           {connected ? t.live : t.offline}
         </span>
@@ -232,27 +232,27 @@ export function ChatBox({
           const name = own && me === "buyer" ? t.you : m.sender === "staff" ? t.them(m.staffName) : t.them(otherName ?? null);
           return (
             <li key={m.id} className={cn("flex flex-col", own ? "items-end" : "items-start")}>
-              <span className="text-xs text-muted">
+              <span className="text-sm text-muted">
                 {me === "staff" && own ? (m.staffName ?? t.you) : name} · {time.format(new Date(m.createdAt))}
               </span>
-              <p className={cn("mt-1 max-w-[85%] rounded-lg px-3 py-2 break-words whitespace-pre-line", own ? "bg-charcoal text-white" : "bg-mist")}>
+              <p className={cn("mt-1 max-w-[85%] rounded-lg px-3 py-2 break-words whitespace-pre-line", own ? "bg-forge text-white" : "bg-mist")}>
                 {m.body}
               </p>
-              {m === lastOwn && <span className="mt-0.5 text-xs text-muted">{m.readAt ? t.read : t.sent}</span>}
+              {m === lastOwn && <span className="mt-0.5 text-sm text-muted">{m.readAt ? t.read : t.sent}</span>}
             </li>
           );
         })}
         {pending.map((p) => (
           <li key={p.clientMessageId} className="flex flex-col items-end">
-            <p className="mt-1 max-w-[85%] rounded-lg bg-charcoal/70 px-3 py-2 break-words whitespace-pre-line text-white">{p.body}</p>
-            <span className={cn("mt-0.5 text-xs", p.error ? "font-semibold text-danger" : "text-muted")}>
+            <p className="mt-1 max-w-[85%] rounded-lg bg-forge/70 px-3 py-2 break-words whitespace-pre-line text-white">{p.body}</p>
+            <span className={cn("mt-0.5 text-sm", p.error ? "font-semibold text-danger" : "text-muted")}>
               {p.error ?? (connected && !p.waiting ? t.sending : t.waiting)}
             </span>
           </li>
         ))}
       </ol>
 
-      <p aria-live="polite" className="h-5 px-4 text-xs text-muted">{otherTyping ? t.typing : ""}</p>
+      <p aria-live="polite" className="h-5 px-4 text-sm text-muted">{otherTyping ? t.typing : ""}</p>
 
       <form onSubmit={submit} className="border-t border-line p-4">
         <label htmlFor="chat-message" className="sr-only">{t.label}</label>
@@ -268,7 +268,7 @@ export function ChatBox({
           className={cn(fieldStyles(tooLong), "mt-0 resize-y")}
         />
         <div className="mt-2 flex items-center justify-between gap-3">
-          <p id="chat-hint" className={cn("text-xs", tooLong ? "font-semibold text-danger" : "text-muted")}>
+          <p id="chat-hint" className={cn("text-sm", tooLong ? "font-semibold text-danger" : "text-muted")}>
             {tooLong ? t.tooLong(maxChatLength) : t.hint}
           </p>
           <button type="submit" disabled={!draft.trim() || tooLong} className={buttonStyles({ size: "sm" })}>{t.send}</button>

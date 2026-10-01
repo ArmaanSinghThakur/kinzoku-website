@@ -15,8 +15,8 @@ export function LanguageMenu({ lang, label }: LanguageMenuProps) {
     <nav aria-label={label} className="hidden lg:block">
       <NavPopover
         align="end"
-        className="w-56"
-        triggerClassName="flex items-center gap-1.5 rounded-md px-2 py-2 font-heading text-sm font-semibold text-white/80 uppercase transition-colors hover:text-white"
+        className="w-60"
+        triggerClassName="flex items-center gap-1.5 rounded-lg px-2.5 py-2 font-mono text-sm font-medium text-graphite/75 uppercase transition-colors hover:bg-graphite/[0.06] hover:text-graphite"
         label={
           <>
             <Globe aria-hidden className="size-4" />
@@ -33,9 +33,12 @@ export function LanguageMenu({ lang, label }: LanguageMenuProps) {
                 hrefLang={page.lang}
                 lang={page.lang}
                 aria-current={pathname === page.href ? "page" : undefined}
-                className="block rounded-md px-3 py-2 text-sm text-charcoal no-underline hover:bg-mist aria-[current=page]:font-semibold"
+                className="flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-graphite no-underline transition-colors hover:bg-mist/70 aria-[current=page]:font-semibold"
               >
                 {page.label}
+                <span aria-hidden className="spec-label text-muted">
+                  {page.lang}
+                </span>
               </Link>
             </li>
           ))}

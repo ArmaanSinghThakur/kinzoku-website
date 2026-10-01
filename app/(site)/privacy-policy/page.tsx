@@ -40,7 +40,7 @@ function Blocks({ blocks }: { blocks: Block[] }) {
         <Inline segments={block.content} />
       </p>
     ) : (
-      <ul key={i} className="mt-4 list-disc space-y-2 pl-6 marker:text-steel">
+      <ul key={i} className="mt-4 list-disc space-y-2 pl-6 marker:text-forge">
         {block.items.map((item, j) => (
           <li key={j}>
             <Inline segments={item} />
@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
                 <li key={section.number}>
                   <a
                     href={`#${sectionId(section.title)}`}
-                    className="-ml-0.5 block border-l-2 border-transparent py-0.5 pl-4 text-muted no-underline hover:border-gold hover:text-charcoal"
+                    className="-ml-0.5 block border-l-2 border-transparent py-0.5 pl-4 text-muted no-underline transition-colors hover:border-forge hover:text-graphite"
                   >
                     {section.number}. {section.title}
                   </a>
@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage() {
             </ol>
           </nav>
 
-          <article className="max-w-[68ch] text-ink">
+          <article className="max-w-[68ch] text-graphite [&_h2]:scroll-mt-24">
             <Blocks blocks={policy.intro} />
             {policy.sections.map((section) => (
               <section key={section.number} id={sectionId(section.title)} className="mt-10">

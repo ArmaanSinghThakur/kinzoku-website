@@ -41,16 +41,16 @@ export default function WirePage() {
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="grid grid-cols-2 gap-4">
             {page.images.map((image) => (
-              <div key={image.alt} className="relative aspect-square overflow-hidden rounded-lg bg-mist">
+              <div key={image.alt} data-reveal="unmask" className="relative aspect-square overflow-hidden rounded-xl bg-mist shadow-card">
                 <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 290px, 50vw" placeholder="blur" className="object-cover" />
               </div>
             ))}
           </div>
           {/* min-w-0: let this grid column shrink so the table scrolls inside its box on phones. */}
           <div className="min-w-0 space-y-6">
-            <ul className="space-y-2">
+            <ul className="divide-y divide-line border-y border-line">
               {page.sizes.map((size) => (
-                <li key={size} className="font-heading text-lg font-semibold text-charcoal">
+                <li key={size} className="py-3 font-heading text-lg font-semibold text-graphite">
                   {size}
                 </li>
               ))}
@@ -59,7 +59,7 @@ export default function WirePage() {
                 once below the table rather than repeated in both rows. */}
             <SpecTable caption={page.chemistryCaption} columns={chemistry.columns} rows={chemistry.rows} />
             <p className="text-sm">
-              <span className="font-semibold text-charcoal">{tensile.label}:</span> {tensile.value}
+              <span className="font-semibold text-graphite">{tensile.label}:</span> {tensile.value}
               <span className="block text-muted">{page.chemistryNote}</span>
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function WirePage() {
             <p className="mt-2">{grades.standards}</p>
           </div>
         </div>
-        <p className="mt-8 font-heading font-semibold text-charcoal">{grades.packaging}</p>
+        <p className="mt-8 font-heading font-semibold text-graphite">{grades.packaging}</p>
       </Section>
 
       <Section id={machines.id} title={machines.title}>
@@ -87,10 +87,10 @@ export default function WirePage() {
           ))}
         </div>
         <h3 className="mt-10 text-xl">{machines.compatibilityTitle}</h3>
-        <div className="mt-4 grid gap-6 lg:grid-cols-3">
+        <div data-reveal="stagger" className="mt-4 grid gap-6 lg:grid-cols-3">
           {machines.compatibility.map((m) => (
-            <div key={m.label} className="rounded-lg border-t-4 border-gold bg-white p-6 shadow-card">
-              <h4 className="font-heading font-semibold text-charcoal">{m.label}</h4>
+            <div key={m.label} className="relative overflow-hidden rounded-xl border border-line bg-white p-6 shadow-card before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-butter">
+              <h4 className="font-heading font-semibold text-graphite">{m.label}</h4>
               <p className="mt-2 text-muted">{m.text}</p>
             </div>
           ))}
@@ -99,14 +99,14 @@ export default function WirePage() {
         <ul className="mt-4 space-y-3">
           {machines.why.map((w) => (
             <li key={w.label} className="flex gap-3">
-              <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-steel" />
+              <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-forge" />
               <span>
-                <strong className="text-charcoal">{w.label}:</strong> {w.text}
+                <strong className="text-graphite">{w.label}:</strong> {w.text}
               </span>
             </li>
           ))}
         </ul>
-        <p className="mt-8 font-heading text-lg font-semibold text-charcoal">
+        <p className="mt-8 font-heading text-lg font-semibold text-graphite">
           {machines.closing.map((line) => (
             <span key={line} className="block">
               {line}
@@ -120,7 +120,7 @@ export default function WirePage() {
           <ul className="space-y-3">
             {applications.items.map((item) => (
               <li key={item.text} className="flex gap-3">
-                <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-steel" />
+                <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-forge" />
                 <span>
                   {item.href ? <Link href={item.href}>{item.text}</Link> : item.text}
                   {item.detail && <span className="block text-sm text-muted">{item.detail}</span>}
@@ -130,7 +130,7 @@ export default function WirePage() {
           </ul>
           <div>
             <h3 className="text-lg">{characteristics.title}</h3>
-            <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-steel">
+            <ul className="mt-3 list-disc space-y-2 pl-5 marker:text-forge">
               {characteristics.items.map((c) => (
                 <li key={c}>{c}</li>
               ))}
@@ -159,12 +159,12 @@ export default function WirePage() {
         </div>
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {astm.uses.map((use) => (
-            <div key={use.group} className="rounded-lg border border-line p-5">
+            <div key={use.group} className="rounded-xl border border-line bg-white p-5 shadow-card">
               <h3 className="text-lg">{use.group}</h3>
               <dl className="mt-3 space-y-3 text-sm">
                 {use.items.map((item) => (
                   <div key={item.text}>
-                    {item.label && <dt className="font-semibold text-charcoal">{item.label}</dt>}
+                    {item.label && <dt className="font-semibold text-graphite">{item.label}</dt>}
                     <dd className="text-muted">{item.text}</dd>
                   </div>
                 ))}
@@ -177,16 +177,18 @@ export default function WirePage() {
       <Section tone="mist" title={reviews.title} intro={reviews.intro}>
         <div className="grid gap-6 lg:grid-cols-3">
           {reviews.quotes.map((q) => (
-            <figure key={q.author} className="flex flex-col rounded-lg bg-white p-6 shadow-card">
-              <Quote aria-hidden className="size-6 text-gold" />
-              <blockquote className="mt-3 flex-1">{q.text}</blockquote>
-              <figcaption className="mt-4 text-sm font-semibold text-steel italic">{q.author}</figcaption>
+            <figure key={q.author} className="flex flex-col rounded-xl border border-line bg-white p-6 shadow-card">
+              <span aria-hidden className="grid size-10 place-items-center rounded-lg bg-butter">
+                <Quote className="size-5 fill-current text-graphite" />
+              </span>
+              <blockquote className="mt-4 flex-1">{q.text}</blockquote>
+              <figcaption className="mt-4 text-sm font-semibold text-forge italic">{q.author}</figcaption>
             </figure>
           ))}
-          <div className="rounded-lg bg-charcoal p-6 text-white">
+          <div className="rounded-xl bg-forge p-6 text-chalk">
             <p className="font-heading text-xl font-bold">{reviews.next.title}</p>
             {reviews.next.lines.map((line) => (
-              <p key={line} className="mt-3 text-white/80 italic">
+              <p key={line} className="mt-3 text-chalk/85 italic">
                 {line}
               </p>
             ))}

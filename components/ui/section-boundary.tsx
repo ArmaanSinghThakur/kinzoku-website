@@ -13,7 +13,7 @@ export function SectionBoundary({ children, message = enError.section }: { child
   return (
     <ErrorBoundary
       fallbackRender={({ resetErrorBoundary }) => (
-        <div role="alert" className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-line bg-mist p-6">
+        <div role="alert" className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-line bg-mist p-6">
           <p>{message}</p>
           <button type="button" onClick={resetErrorBoundary} className={buttonStyles({ variant: "secondary", size: "sm" })}>
             {enError.retry}

@@ -2,8 +2,8 @@ import { rfqStatuses } from "@/content/rfq-status";
 import { cn } from "@/lib/cn";
 
 const tones = {
-  received: "bg-gold/25 text-charcoal",
-  in_review: "bg-steel/10 text-steel",
+  received: "bg-butter/25 text-graphite",
+  in_review: "bg-forge/10 text-forge",
   quote_sent: "bg-emerald-100 text-emerald-800",
   closed: "bg-mist text-muted",
 } as const;

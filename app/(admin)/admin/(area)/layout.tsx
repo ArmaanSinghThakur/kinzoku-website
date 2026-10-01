@@ -13,9 +13,9 @@ export default async function AdminAreaLayout({ children }: { children: ReactNod
   const link = "text-white/80 no-underline hover:text-white";
   return (
     <>
-      <header className="bg-charcoal text-white">
+      <header className="bg-forge text-white">
         <div className="site-container flex flex-wrap items-center gap-x-6 gap-y-2 py-3">
-          <Link href="/admin" className="font-heading font-bold tracking-wide text-gold no-underline">
+          <Link href="/admin" className="font-heading font-bold tracking-wide text-butter no-underline">
             KINZOKU <span className="font-normal text-white/60">admin</span>
           </Link>
           {!me.mustChangePassword && (

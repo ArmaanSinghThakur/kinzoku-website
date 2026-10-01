@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const sample = <span className="text-xs font-normal text-muted"> (sample data)</span>;
+const sample = <span className="text-sm font-normal text-muted"> (sample data)</span>;
 
 export default function StyleguidePage() {
   return (
@@ -45,7 +45,7 @@ export default function StyleguidePage() {
           <Button size="sm">Small primary</Button>
           <Button disabled>Disabled</Button>
         </div>
-        <div className="mt-4 flex flex-wrap gap-3 rounded-lg bg-charcoal p-6">
+        <div className="mt-4 flex flex-wrap gap-3 rounded-lg bg-forge p-6">
           <ButtonLink href="/contact-us#quote">On dark</ButtonLink>
           <ButtonLink href="#products" variant="secondary-dark">
             Outline on dark
@@ -177,7 +177,7 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      <Section tone="dark" eyebrow="Dark tone" title="Section on charcoal" intro="Used sparingly, for example under the hero." />
+      <Section tone="forge" eyebrow="Forge tone" title="Section on Forge Navy" intro="Used sparingly; the footer is the main Forge Navy surface." />
 
       <QuoteBanner />
     </>

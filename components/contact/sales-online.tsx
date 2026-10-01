@@ -31,8 +31,11 @@ export function SalesOnline({ label }: { label: string }) {
 
   if (!online) return null;
   return (
-    <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-emerald-700">
-      <span aria-hidden className="size-2.5 rounded-full bg-emerald-500" />
+    <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-graphite">
+      <span aria-hidden className="relative flex size-2.5">
+        <span className="absolute inset-0 rounded-full bg-emerald-500 opacity-60 motion-safe:animate-ping" />
+        <span className="relative size-2.5 rounded-full bg-emerald-600" />
+      </span>
       {label}
     </p>
   );

@@ -33,6 +33,14 @@ export function NavPopover({ label, triggerClassName, align = "start", className
     else panel.left = `${rect.left}px`;
   }
 
+  // A wide panel (the photo menu) that would run off a narrow window moves back inside it.
+  function keepInside(event: ToggleEvent<HTMLDivElement>) {
+    if (event.newState !== "open" || align !== "start") return;
+    const panel = event.currentTarget;
+    const overflow = panel.getBoundingClientRect().right - (document.documentElement.clientWidth - 16);
+    if (overflow > 0) panel.style.left = `${Math.max(16, panel.getBoundingClientRect().left - overflow)}px`;
+  }
+
   return (
     <>
       <button
@@ -42,17 +50,18 @@ export function NavPopover({ label, triggerClassName, align = "start", className
         className={clsx("cursor-pointer [&:has(+:popover-open)_.chevron]:rotate-180", triggerClassName)}
       >
         {label}
-        <ChevronDown aria-hidden className="chevron size-4 transition-transform" />
+        <ChevronDown aria-hidden className="chevron size-4 transition-transform duration-300" />
       </button>
       <div
         id={id}
         popover="auto"
         onBeforeToggle={place}
+        onToggle={keepInside}
         // Client-side navigation keeps the page, so close the panel when a link inside is chosen.
         onClick={(event) => {
           if ((event.target as Element).closest("a")) event.currentTarget.hidePopover();
         }}
-        className={clsx("nav-popover rounded-lg bg-white p-2 text-charcoal shadow-card ring-1 ring-line", className)}
+        className={clsx("nav-popover rounded-xl bg-chalk p-2 text-graphite shadow-lift ring-1 ring-line", className)}
       >
         {children}
       </div>

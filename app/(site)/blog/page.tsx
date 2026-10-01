@@ -27,8 +27,8 @@ export default async function BlogPage() {
         intro="CBAM, steel sourcing and product guides for European buyers."
       />
       {categories.map((category, i) => (
-        <Section key={category} tone={i % 2 === 0 ? "white" : "mist"} title={category}>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Section key={category} tone={i % 2 === 0 ? "chalk" : "mist"} eyebrow={String(i + 1).padStart(2, "0")} title={category}>
+          <div data-reveal="stagger" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {articles
               .filter((a) => a.category === category)
               .map((a) => (

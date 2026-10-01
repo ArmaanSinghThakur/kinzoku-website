@@ -46,13 +46,13 @@ export function LoginForm() {
   return (
     <form onSubmit={onSubmit} className="mt-6 space-y-5">
       <div>
-        <label htmlFor="login-email" className="font-semibold text-charcoal">
+        <label htmlFor="login-email" className="font-semibold text-graphite">
           {t.email}
         </label>
         <input id="login-email" name="email" type="email" autoComplete="username" required className={fieldStyles()} />
       </div>
       <div>
-        <label htmlFor="login-password" className="font-semibold text-charcoal">
+        <label htmlFor="login-password" className="font-semibold text-graphite">
           {t.password}
         </label>
         <input id="login-password" name="password" type="password" autoComplete="current-password" required className={fieldStyles()} />

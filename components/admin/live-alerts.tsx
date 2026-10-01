@@ -76,13 +76,13 @@ export function LiveAlerts() {
       </span>
       <div role="status" aria-live="polite" className="fixed top-4 right-4 z-50 flex w-80 max-w-[calc(100vw-2rem)] flex-col gap-2">
         {alerts.map((a) => (
-          <div key={a.id} className="rounded-lg border border-line bg-white p-4 text-sm text-ink shadow-card">
-            <p className="font-semibold text-charcoal">{a.text}</p>
+          <div key={a.id} className="rounded-lg border border-line bg-white p-4 text-sm text-graphite shadow-card">
+            <p className="font-semibold text-graphite">{a.text}</p>
             <div className="mt-2 flex gap-4">
               <Link href={`/admin/requests/${a.reference}`} onClick={() => setAlerts((l) => l.filter((x) => x.id !== a.id))}>
                 {t.open}
               </Link>
-              <button type="button" className="text-muted hover:text-ink" onClick={() => setAlerts((l) => l.filter((x) => x.id !== a.id))}>
+              <button type="button" className="text-muted hover:text-graphite" onClick={() => setAlerts((l) => l.filter((x) => x.id !== a.id))}>
                 {t.dismiss}
               </button>
             </div>

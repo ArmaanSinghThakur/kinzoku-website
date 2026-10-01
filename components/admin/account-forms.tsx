@@ -20,7 +20,7 @@ function Result({ state }: { state: StaffActionState }) {
   return (
     <div role="status" className="rounded-lg bg-mist p-3 text-sm">
       <p>{state.message}</p>
-      {state.password && <p className="mt-1 font-mono text-base font-semibold tracking-wide text-charcoal select-all">{state.password}</p>}
+      {state.password && <p className="mt-1 font-mono text-base font-semibold tracking-wide text-graphite select-all">{state.password}</p>}
     </div>
   );
 }
@@ -32,15 +32,15 @@ export function AddStaffForm() {
     <form action={action} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <label htmlFor="staff-name" className="font-semibold text-charcoal">{t.name}</label>
+          <label htmlFor="staff-name" className="font-semibold text-graphite">{t.name}</label>
           <input id="staff-name" name="name" required maxLength={200} className={fieldStyles()} />
         </div>
         <div>
-          <label htmlFor="staff-email" className="font-semibold text-charcoal">{t.email}</label>
+          <label htmlFor="staff-email" className="font-semibold text-graphite">{t.email}</label>
           <input id="staff-email" name="email" type="email" required maxLength={254} className={fieldStyles()} />
         </div>
         <div>
-          <label htmlFor="staff-role" className="font-semibold text-charcoal">{t.role}</label>
+          <label htmlFor="staff-role" className="font-semibold text-graphite">{t.role}</label>
           <select id="staff-role" name="role" defaultValue="sales" className={fieldStyles()}>
             <option value="sales">{t.roles.sales}</option>
             <option value="admin">{t.roles.admin}</option>
@@ -80,7 +80,7 @@ export function PasswordForm({ email }: { email: string }) {
   const [state, action, pending] = useActionState<PasswordState, FormData>(changePassword, null);
   const field = (name: string, label: string, autoComplete: string, hint?: string) => (
     <div>
-      <label htmlFor={`password-${name}`} className="font-semibold text-charcoal">{label}</label>
+      <label htmlFor={`password-${name}`} className="font-semibold text-graphite">{label}</label>
       {hint && <p id={`password-${name}-hint`} className="text-sm text-muted">{hint}</p>}
       <input
         id={`password-${name}`}

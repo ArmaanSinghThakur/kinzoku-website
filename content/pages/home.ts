@@ -1,4 +1,5 @@
 import coilNails from "@/public/images/products/coil-nails.jpg";
+import epalNails from "@/public/images/products/epal-nails.jpg";
 import nailWire from "@/public/images/products/nail-wire.jpg";
 import { routes } from "@/lib/routes";
 
@@ -18,6 +19,9 @@ export const home = {
     text: "Kinzoku supplies pallet manufacturers, construction wholesalers and nail producers across Europe, Latin America and Africa with fasteners and wire.",
     quote: "Request a quote",
     products: "View products",
+    // Redesign (plan §4): the coil photo beside the headline, captioned like a datasheet figure.
+    image: { src: coilNails, alt: "Wire collated coil nails packed in a carton" },
+    figure: "Fig. 01 — Wire collated coil nails",
   },
   badgesLabel: "Why buyers work with Kinzoku",
   badges: [
@@ -28,28 +32,40 @@ export const home = {
   ],
   products: {
     title: "Our Products",
+    // "View specs" drawer on each card (plan §4).
+    specs: "View specs",
+    close: "Close",
+    productPage: "Product page",
+    quote: "Request a quote",
     items: [
       {
         href: routes.nails,
         title: "Coil Nails, Loose Nails, EPAL Nails & Staples",
         text: "15°–16° wire collated coil nails (2.1–3.8 mm, 25–100 mm), EPAL-certified pallet nails, bulk common nails and industrial staples. Compatible with Bostitch, MAX, Paslode, BeA, Senco and automated EPAL lines (Storti, CAPE, Gulliver)",
-        image: { src: coilNails, alt: "Wire collated coil nails packed in a carton" },
+        // The hero shows the coil nail photo, so this card shows the pallet nails.
+        image: { src: epalNails, alt: "EPAL-certified ring shank pallet nails" },
+        quoteHref: "/contact-us?product=nails#quote",
       },
       {
         href: routes.wire,
         title: "Nail Wire & Drawn Wire",
         text: "Machine-grade low carbon steel wire (SAE 1008/1010) engineered for Enkotec, Wafios and Vitari high-speed nail machines. CBAM-vetted wire rod with full mill test certificates.",
         image: { src: nailWire, alt: "Coils of drawn nail wire" },
+        quoteHref: "/contact-us?product=wire#quote",
       },
       {
         href: routes.bars,
         title: "Long Products",
         text: "Alloy Bars, Carbon Bars, Bright Bars",
+        // No photo yet (Kinzoku to supply one): the card shows the bar profile drawing.
+        image: null,
+        quoteHref: "/contact-us?product=bars#quote",
       },
     ],
   },
   process: {
     title: "From Wire Rod to Nails",
+    eyebrow: "Rod → drawing → nails → coils",
     steps: [
       {
         title: "Input: Wire Rod Coils",
@@ -83,4 +99,6 @@ export const home = {
     title: "About Us",
     more: "More about Kinzoku",
   },
+  // The wire thread that runs down the page, from the hero to the quote (plan §5).
+  thread: { start: "Wire rod", end: "Factory gate" },
 };

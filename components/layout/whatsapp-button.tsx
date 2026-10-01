@@ -26,7 +26,7 @@ export function WhatsAppButton({ dict }: { dict: ChromeDictionary }) {
       rel="noopener noreferrer"
       aria-label={dict.whatsapp.label}
       title={dict.whatsapp.label}
-      className="whatsapp-button fixed right-4 bottom-4 z-30 hidden size-12 place-items-center rounded-full bg-[#128C7E] text-white shadow-card transition-colors hover:bg-[#0E7266] min-[1340px]:grid"
+      className="whatsapp-button fixed right-4 bottom-4 z-30 hidden size-12 place-items-center rounded-full bg-[#128C7E] text-white shadow-lift ring-4 ring-chalk transition-[background-color,scale] duration-300 hover:scale-105 hover:bg-[#0E7266] min-[1340px]:grid"
     >
       <WhatsAppIcon className="size-6" />
     </a>

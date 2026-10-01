@@ -27,10 +27,16 @@ export default function JobOpeningsPage() {
       />
 
       <Section>
-        <div className="grid gap-6 md:grid-cols-2">
-          {page.roles.map((role) => (
-            <article key={role.id} className="flex flex-col rounded-lg border-t-4 border-gold bg-white p-6 shadow-card">
-              <h2 className="text-xl">{role.title}</h2>
+        <div data-reveal="stagger" className="grid gap-6 md:grid-cols-2">
+          {page.roles.map((role, i) => (
+            <article
+              key={role.id}
+              className="flex flex-col rounded-xl border border-line bg-white p-6 shadow-card transition-shadow duration-300 hover:shadow-lift sm:p-7"
+            >
+              <p aria-hidden className="spec-label text-forge">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h2 className="mt-2 text-xl">{role.title}</h2>
               <ul className="mt-3 flex-1 space-y-1 text-sm text-muted">
                 {role.summary.map((line) => (
                   <li key={line}>{line}</li>
@@ -52,10 +58,10 @@ export default function JobOpeningsPage() {
       </Section>
 
       {page.roles.map((role, i) => (
-        <Section key={role.id} id={role.id} tone={i % 2 === 0 ? "mist" : "white"} title={role.title}>
+        <Section key={role.id} id={role.id} tone={i % 2 === 0 ? "mist" : "chalk"} title={role.title}>
           <ul className="-mt-6 mb-8 flex flex-wrap gap-2">
             {role.summary.map((line) => (
-              <li key={line} className="rounded-md bg-white px-3 py-1 text-sm font-semibold text-steel ring-1 ring-line">
+              <li key={line} className="rounded-md bg-white px-3 py-1 text-sm font-semibold text-forge ring-1 ring-line">
                 {line}
               </li>
             ))}
@@ -70,7 +76,7 @@ export default function JobOpeningsPage() {
                   </p>
                 ))}
                 {section.items && (
-                  <ul className="mt-3 list-disc space-y-1.5 pl-6 marker:text-steel">
+                  <ul className="mt-3 list-disc space-y-1.5 pl-6 marker:text-forge">
                     {section.items.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
@@ -78,10 +84,10 @@ export default function JobOpeningsPage() {
                 )}
               </div>
             ))}
-            <div className="rounded-lg bg-white p-6 ring-1 ring-line">
+            <div className="rounded-xl bg-blush p-6 sm:p-8">
               <p>{role.apply.instruction}</p>
               <p className="mt-3">{role.apply.questionsIntro}</p>
-              <ol className="mt-3 list-decimal space-y-1.5 pl-6 marker:text-steel">
+              <ol className="mt-3 list-decimal space-y-1.5 pl-6 marker:text-forge">
                 {role.apply.questions.map((q) => (
                   <li key={q}>{q}</li>
                 ))}

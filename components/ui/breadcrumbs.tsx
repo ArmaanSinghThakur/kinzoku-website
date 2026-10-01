@@ -23,13 +23,13 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
       <ol className="flex flex-wrap items-center gap-1 text-muted">
         {items.map((crumb, i) => (
           <li key={crumb.href} className="flex items-center gap-1">
-            {i > 0 && <ChevronRight aria-hidden className="size-4" />}
+            {i > 0 && <ChevronRight aria-hidden className="size-4 text-graphite/40" />}
             {i === items.length - 1 ? (
-              <span aria-current="page" className="text-ink">
+              <span aria-current="page" className="font-medium text-graphite">
                 {crumb.name}
               </span>
             ) : (
-              <Link href={crumb.href} className="text-muted hover:text-steel">
+              <Link href={crumb.href} className="text-muted no-underline transition-colors hover:text-forge hover:underline">
                 {crumb.name}
               </Link>
             )}

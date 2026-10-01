@@ -53,12 +53,15 @@ export default async function ArticlePage({ params }: PageProps<"/[slug]">) {
 
       <div className="site-container py-12 sm:py-16">
         {/* Own content, converted from Markdown at build time. */}
-        <article className="prose prose-lg max-w-3xl" dangerouslySetInnerHTML={{ __html: article.html }} />
+        <article
+          className="prose prose-lg max-w-3xl prose-headings:tracking-tight prose-a:decoration-forge/40 prose-a:underline-offset-4 hover:prose-a:decoration-forge prose-th:font-mono prose-th:text-[0.8125rem] prose-th:uppercase prose-th:tracking-wider prose-img:rounded-xl"
+          dangerouslySetInnerHTML={{ __html: article.html }}
+        />
       </div>
 
       {related.length > 0 && (
         <Section tone="mist" title="Related articles">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div data-reveal="stagger" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {related.map((a) => (
               <BlogCard key={a.slug} href={`/${a.slug}`} title={a.title} summary={a.description} date={a.date} readingMinutes={a.readingMinutes} />
             ))}

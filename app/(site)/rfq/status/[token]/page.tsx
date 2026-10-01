@@ -49,16 +49,17 @@ export default async function RfqStatusPage({ params }: PageProps<"/rfq/status/[
 
   return (
     <>
-      <section className="border-b border-line bg-mist">
-        <div className="site-container py-10 sm:py-14">
-          <h1 className="text-4xl sm:text-5xl">
+      <section data-tone="mist" className="relative overflow-hidden border-b border-line bg-mist">
+        <div aria-hidden className="wire-mesh absolute inset-0 [mask-image:linear-gradient(to_left,black,transparent_70%)]" />
+        <div className="site-container relative py-12 sm:py-16">
+          <h1 className="load-rise text-title">
             {t.title} <span className="whitespace-nowrap">{rfq.reference}</span>
           </h1>
           <p className="mt-4 text-lg text-muted">{t.received(day.format(rfq.createdAt))}</p>
         </div>
       </section>
 
-      <section className="py-12 sm:py-16">
+      <section data-tone="chalk" className="py-12 sm:py-16">
         <div className="site-container grid gap-10 lg:grid-cols-[3fr_2fr]">
           <div className="space-y-10">
             <div>
@@ -72,16 +73,16 @@ export default async function RfqStatusPage({ params }: PageProps<"/rfq/status/[
                     <li key={step} className="flex items-start gap-4" aria-current={isCurrent ? "step" : undefined}>
                       <span
                         className={cn(
-                          "grid size-9 shrink-0 place-items-center rounded-full font-heading font-bold",
-                          done && "bg-steel text-white",
-                          isCurrent && "bg-gold text-charcoal",
-                          !done && !isCurrent && "border border-line text-muted",
+                          "grid size-9 shrink-0 place-items-center rounded-full font-mono text-sm font-medium",
+                          done && "bg-forge text-chalk",
+                          isCurrent && "bg-butter text-graphite ring-4 ring-butter/35",
+                          !done && !isCurrent && "border border-line bg-white text-muted",
                         )}
                       >
                         {done ? <Check aria-hidden className="size-5" /> : i + 1}
                       </span>
                       <div className="pt-1">
-                        <p className={cn("font-semibold", isCurrent ? "text-charcoal" : done ? "text-ink" : "text-muted")}>
+                        <p className={cn("font-semibold", isCurrent ? "text-graphite" : done ? "text-graphite" : "text-muted")}>
                           {rfqStatuses[step]}
                           {isCurrent && <span className="sr-only"> ({t.current})</span>}
                         </p>
@@ -101,7 +102,7 @@ export default async function RfqStatusPage({ params }: PageProps<"/rfq/status/[
             <BuyerChat token={token} reference={rfq.reference} />
           </div>
 
-          <aside className="h-fit rounded-lg bg-mist p-6">
+          <aside className="h-fit rounded-xl bg-blush p-6 sm:p-7 lg:sticky lg:top-24">
             <h2 className="text-lg">{t.questions.title}</h2>
             <p className="mt-2 text-muted">{t.questions.text(rfq.reference)}</p>
             <div className="mt-5 flex flex-wrap gap-3">

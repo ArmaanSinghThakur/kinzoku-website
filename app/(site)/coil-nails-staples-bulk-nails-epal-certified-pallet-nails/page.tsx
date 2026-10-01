@@ -28,12 +28,12 @@ type TabIntroProps = { image: { src: StaticImageData; alt: string }; title: stri
 
 function TabIntro({ image, title, lead, children }: TabIntroProps) {
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[2fr_3fr]">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-mist">
+    <div className="grid items-start gap-8 lg:grid-cols-[2fr_3fr] lg:gap-12">
+      <div data-reveal="unmask" className="relative aspect-[4/3] overflow-hidden rounded-xl bg-mist shadow-card">
         <Image src={image.src} alt={image.alt} fill sizes={imageSizes} placeholder="blur" className="object-cover" />
       </div>
       <div>
-        <h2 className="text-3xl">{title}</h2>
+        <h2 className="text-section">{title}</h2>
         {lead && <p className="mt-3 text-lg text-muted italic">{lead}</p>}
         {children && <div className="mt-6">{children}</div>}
       </div>
@@ -68,17 +68,17 @@ export default function CoilNailsPage() {
             <SpecList specs={staples.specs} />
           </TabIntro>
           <div className="grid gap-6 md:grid-cols-2">
-            <p className="rounded-lg bg-mist p-5">
+            <p className="rounded-xl border border-line bg-mist/60 p-5">
               {staples.packaging.map((line, i) => (
-                <span key={line} className={i === 0 ? "block font-semibold text-charcoal" : "block"}>
+                <span key={line} className={i === 0 ? "block font-semibold text-graphite" : "block"}>
                   {line}
                 </span>
               ))}
             </p>
             <ul className="space-y-2">
               {staples.features.map((feature) => (
-                <li key={feature} className="flex gap-2 italic">
-                  <CheckCircle2 aria-hidden className="mt-1 size-4 shrink-0 text-steel" />
+                <li key={feature} className="flex gap-2.5 italic">
+                  <CheckCircle2 aria-hidden className="mt-1 size-4 shrink-0 text-forge" />
                   {feature}
                 </li>
               ))}
@@ -86,7 +86,7 @@ export default function CoilNailsPage() {
           </div>
           <div className="grid gap-6 lg:grid-cols-2">
             {staplesSeries.items.map((series) => (
-              <div key={series.series} className="min-w-0 space-y-4 rounded-lg border border-line p-5">
+              <div key={series.series} className="min-w-0 space-y-4 rounded-xl border border-line bg-white p-5 shadow-card">
                 <h3 className="text-xl">{series.series}</h3>
                 <SpecList
                   className="text-sm"
@@ -129,9 +129,9 @@ export default function CoilNailsPage() {
         <div className="space-y-8">
           <TabIntro image={epal.image} title={epal.title} lead={epal.lead}>
             <h3 className="text-lg">{epal.sizesLabel}</h3>
-            <ul className="mt-3 divide-y divide-line rounded-lg border border-line">
+            <ul className="mt-3 divide-y divide-line overflow-hidden rounded-xl border border-line bg-white">
               {epal.sizes.map((size) => (
-                <li key={size} className="px-4 py-2.5 font-semibold text-charcoal">
+                <li key={size} className="px-4 py-2.5 font-semibold text-graphite tabular-nums transition-colors hover:bg-chalk">
                   {size}
                 </li>
               ))}
@@ -161,12 +161,12 @@ export default function CoilNailsPage() {
       </Section>
 
       <Section tone="mist" title={page.tools.title} intro={page.tools.text}>
-        <p className="-mt-6 font-heading text-lg font-semibold text-charcoal">{page.tools.brands}</p>
+        <p className="spec-label -mt-4 text-forge">{page.tools.brands}</p>
         <h3 className="mt-10 text-xl">{page.tools.advantagesTitle}</h3>
-        <ul className="mt-4 grid gap-4 md:grid-cols-2">
+        <ul data-reveal="stagger" className="mt-4 grid gap-4 md:grid-cols-2">
           {page.tools.advantages.map((a) => (
-            <li key={a.label} className="rounded-lg bg-white p-5 shadow-card">
-              <span className="font-semibold text-charcoal">{a.label}:</span> {a.text}
+            <li key={a.label} className="rounded-xl border border-line bg-white p-5 shadow-card">
+              <span className="font-semibold text-graphite">{a.label}:</span> {a.text}
             </li>
           ))}
         </ul>
@@ -186,7 +186,7 @@ export default function CoilNailsPage() {
         </div>
       </Section>
 
-      <div className="site-container">
+      <div className="site-container pt-4">
         <KeywordIndex title={page.index.title} paragraphs={page.index.paragraphs} />
       </div>
 

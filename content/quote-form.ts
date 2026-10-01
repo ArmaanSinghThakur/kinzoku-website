@@ -30,6 +30,16 @@ export const quoteForm = {
   fromLink: { nails: "nails", wire: "wire", bars: "bars", cbam: "cbam_advisory" } as Record<string, RequestType>,
 
   groups: { company: "Your details", requirement: "Your requirement", delivery: "Delivery", more: "Anything else" },
+  /** The 4 steps of the redesign (plan §4): product → quantity → destination → contact. */
+  steps: {
+    label: "Steps of your request",
+    product: "Product",
+    quantity: "Quantity",
+    destination: "Destination",
+    contact: "Contact",
+    done: "complete",
+    current: "current step",
+  },
 
   companyName: { label: "Company Legal Name", error: "Please enter your company's legal name." },
   contactName: { label: "Name", error: "Please enter your name." },

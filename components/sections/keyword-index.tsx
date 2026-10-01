@@ -4,15 +4,17 @@
  */
 export function KeywordIndex({ title, paragraphs }: { title: string; paragraphs: { label: string; text: string }[] }) {
   return (
-    <details className="group rounded-lg border border-line">
-      <summary className="cursor-pointer list-none px-5 py-4 font-heading text-sm font-semibold text-steel [&::-webkit-details-marker]:hidden">
-        <span className="mr-2 inline-block transition-transform group-open:rotate-90">›</span>
+    <details className="group rounded-xl border border-dashed border-graphite/25 bg-chalk">
+      <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-4 text-sm font-semibold text-forge transition-colors hover:text-graphite [&::-webkit-details-marker]:hidden">
+        <span aria-hidden className="font-mono text-base transition-transform duration-300 group-open:rotate-90">
+          ›
+        </span>
         {title}
       </summary>
       <div className="space-y-3 px-5 pb-5 text-sm text-muted">
         {paragraphs.map((p) => (
           <p key={p.label}>
-            <strong className="text-ink">{p.label}:</strong> {p.text}
+            <strong className="text-graphite">{p.label}:</strong> {p.text}
           </p>
         ))}
       </div>

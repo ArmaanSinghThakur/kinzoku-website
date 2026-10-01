@@ -15,7 +15,7 @@ export default async function AccountPage() {
         {me.name} · {me.email} · {admin.staff.roles[me.role]}
       </p>
       {me.mustChangePassword && (
-        <p role="status" className="mt-6 max-w-md rounded-lg border border-gold bg-gold/15 p-4 font-semibold text-charcoal">
+        <p role="status" className="mt-6 max-w-md rounded-lg border border-butter bg-butter/15 p-4 font-semibold text-graphite">
           {t.mustChange}
         </p>
       )}

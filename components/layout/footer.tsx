@@ -3,15 +3,17 @@ import type { ReactNode } from "react";
 import type { ChromeDictionary } from "@/content/i18n/en";
 import { routes } from "@/lib/routes";
 import { site } from "@/lib/site";
+import { ClosingWordmark } from "./closing-wordmark";
 import { Logo } from "./logo";
 
-const linkClass = "text-white/80 no-underline transition-colors hover:text-gold";
+const linkClass = "text-chalk/85 no-underline transition-colors hover:text-butter";
+const headingClass = "spec-label text-butter";
 
 function Row({ label, colon, children }: { label: string; colon: string; children: ReactNode }) {
   // Label and value on one line (the live footer splits them apart).
   return (
-    <div className="flex gap-2">
-      <dt className="text-white/55">
+    <div className="flex flex-wrap gap-x-2">
+      <dt className="text-chalk/70">
         {label}
         {colon}
       </dt>
@@ -20,25 +22,39 @@ function Row({ label, colon, children }: { label: string; colon: string; childre
   );
 }
 
+/** Forge Navy footer, ending in the full-width KINZOKU wordmark. */
 export function Footer({ dict }: { dict: ChromeDictionary }) {
   const t = dict.footer;
   // French typography puts a no-break space before a colon.
-  const colon = dict.lang.startsWith("fr") ? " :" : ":";
+  const colon = dict.lang.startsWith("fr") ? " :" : ":";
 
   return (
-    <footer className="bg-charcoal text-sm text-white/80">
-      <div className="site-container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="bg-forge text-sm text-chalk/85">
+      <div className="site-container grid gap-10 pt-16 pb-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
-          <Logo label={dict.nav.home} />
-          <address className="mt-4 not-italic">
+          <Logo label={dict.nav.home} className="text-chalk" />
+          <address className="mt-5 not-italic">
             {site.name}
             <br />
             {site.address.locality}, {site.address.country}
           </address>
+          {site.nameSeal && (
+            <p className="mt-6 flex max-w-64 items-center gap-3 text-chalk/75">
+              {/* Hanko-style seal: Kinzoku (金属) means "metal". */}
+              <span
+                lang="ja"
+                aria-hidden
+                className="grid size-12 shrink-0 place-items-center rounded-md border-2 border-butter font-bold text-butter [font-family:'Yu_Gothic','Hiragino_Sans','Noto_Sans_JP',sans-serif] [writing-mode:vertical-rl]"
+              >
+                金属
+              </span>
+              {t.nameMeaning}
+            </p>
+          )}
         </div>
 
         <div>
-          <h2 className="font-heading text-sm font-semibold tracking-wider text-white uppercase">{t.contact}</h2>
+          <h2 className={headingClass}>{t.contact}</h2>
           <dl className="mt-4 space-y-2">
             <Row colon={colon} label={t.email}>
               <a href={`mailto:${site.email}`} className={linkClass}>
@@ -59,7 +75,7 @@ export function Footer({ dict }: { dict: ChromeDictionary }) {
         </div>
 
         <div>
-          <h2 className="font-heading text-sm font-semibold tracking-wider text-white uppercase">{t.company}</h2>
+          <h2 className={headingClass}>{t.company}</h2>
           <dl className="mt-4 space-y-2">
             <Row colon={colon} label={t.kvk}>{site.kvk}</Row>
             <Row colon={colon} label={t.vat}>{site.vat}</Row>
@@ -67,7 +83,7 @@ export function Footer({ dict }: { dict: ChromeDictionary }) {
         </div>
 
         <div>
-          <h2 className="font-heading text-sm font-semibold tracking-wider text-white uppercase">{t.links}</h2>
+          <h2 className={headingClass}>{t.links}</h2>
           <ul className="mt-4 space-y-2">
             <li>
               <Link href={routes.about} className={linkClass}>
@@ -85,7 +101,7 @@ export function Footer({ dict }: { dict: ChromeDictionary }) {
               </Link>
             </li>
             <li>
-              {/* Opens the cookie settings panel (wired up in Step 4). */}
+              {/* Opens the cookie settings panel (components/consent/cookie-consent.tsx). */}
               <a href="#cookie-settings" className={linkClass}>
                 {t.cookies}
               </a>
@@ -94,8 +110,10 @@ export function Footer({ dict }: { dict: ChromeDictionary }) {
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <p className="site-container py-6 text-white/55">
+      <ClosingWordmark />
+
+      <div className="mt-8 border-t border-chalk/15">
+        <p className="site-container py-6 text-chalk/70">
           © {new Date().getFullYear()} {site.name}
         </p>
       </div>

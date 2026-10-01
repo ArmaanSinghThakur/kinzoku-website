@@ -44,9 +44,9 @@ export function CbamCalculator({ t }: { t: Text }) {
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
-      <form onSubmit={onSubmit} noValidate className="space-y-5">
+      <form onSubmit={onSubmit} noValidate className="space-y-5 rounded-xl border border-line bg-white p-6 shadow-card sm:p-8">
         <div>
-          <label htmlFor={`${id}-route`} className="font-semibold text-charcoal">
+          <label htmlFor={`${id}-route`} className="font-semibold text-graphite">
             {t.routeLabel}
           </label>
           <select
@@ -64,7 +64,7 @@ export function CbamCalculator({ t }: { t: Text }) {
         </div>
 
         <div>
-          <label htmlFor={`${id}-tonnes`} className="font-semibold text-charcoal">
+          <label htmlFor={`${id}-tonnes`} className="font-semibold text-graphite">
             {t.tonnesLabel}
           </label>
           <input
@@ -90,7 +90,7 @@ export function CbamCalculator({ t }: { t: Text }) {
         </div>
 
         <div>
-          <label htmlFor={`${id}-price`} className="font-semibold text-charcoal">
+          <label htmlFor={`${id}-price`} className="font-semibold text-graphite">
             {t.priceLabel}
           </label>
           <input
@@ -117,26 +117,31 @@ export function CbamCalculator({ t }: { t: Text }) {
         </button>
       </form>
 
-      <div className="rounded-lg bg-charcoal p-6 text-white">
-        <h3 className="text-xl text-white">{t.resultsTitle}</h3>
+      <div className="relative overflow-hidden rounded-xl bg-forge p-6 text-chalk sm:p-8 lg:sticky lg:top-24 lg:self-start">
+        {/* Datasheet grid behind the readout. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgb(247_245_240/0.05)_1px,transparent_1px),linear-gradient(90deg,rgb(247_245_240/0.05)_1px,transparent_1px)] bg-[size:20px_20px]"
+        />
+        <h3 className="relative text-xl text-chalk">{t.resultsTitle}</h3>
         {/* Announced to screen readers when the estimate changes. */}
-        <dl aria-live="polite" className="mt-4 divide-y divide-white/10">
+        <dl aria-live="polite" className="relative mt-4 divide-y divide-chalk/15">
           {[
             [t.results.emissions, result ? formatCbam.emissions(result.emissions) : "—"],
             [t.results.phaseIn, t.results.phaseInValue],
             [t.results.certificates, result ? formatCbam.certificates(result.certificates) : "—"],
           ].map(([label, value]) => (
             <div key={label} className="flex justify-between gap-4 py-3">
-              <dt className="text-white/75">{label}</dt>
-              <dd className="font-semibold">{value}</dd>
+              <dt className="text-chalk/80">{label}</dt>
+              <dd className="font-mono font-medium tabular-nums">{value}</dd>
             </div>
           ))}
           <div className="flex justify-between gap-4 py-3">
-            <dt className="text-white/75">{t.results.cost}</dt>
-            <dd className="font-heading text-2xl font-bold text-gold">{result ? formatCbam.cost(result.cost) : "—"}</dd>
+            <dt className="text-chalk/80">{t.results.cost}</dt>
+            <dd className="font-heading text-3xl font-extrabold text-butter tabular-nums">{result ? formatCbam.cost(result.cost) : "—"}</dd>
           </div>
         </dl>
-        <p className="mt-4 text-xs text-white/60">{t.disclaimer}</p>
+        <p className="relative mt-4 text-sm text-chalk/75">{t.disclaimer}</p>
       </div>
     </div>
   );

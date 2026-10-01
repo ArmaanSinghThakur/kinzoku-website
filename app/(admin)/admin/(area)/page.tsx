@@ -77,7 +77,7 @@ export default async function RequestsPage({ searchParams }: PageProps<"/admin">
               aria-current={s === status ? "page" : undefined}
               className={cn(
                 "rounded-full border px-3 py-1 text-sm no-underline",
-                s === status ? "border-charcoal bg-charcoal text-white" : "border-line text-ink hover:border-charcoal",
+                s === status ? "border-forge bg-forge text-white" : "border-line text-graphite hover:border-graphite",
               )}
             >
               {s ? rfqStatuses[s] : t.all} <span className="opacity-70">{count(s)}</span>

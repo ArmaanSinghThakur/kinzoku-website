@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 // components can use it without tailwind-merge.
 export function fieldStyles(invalid?: boolean) {
   return clsx(
-    "mt-1.5 w-full rounded-lg border bg-white px-4 py-3 text-base text-ink focus:outline-2 focus:outline-offset-0 focus:outline-steel",
+    "mt-2 w-full rounded-lg border bg-white px-4 py-3 text-base text-graphite shadow-[inset_0_1px_2px_rgb(30_35_41/0.05)] transition-[border-color,box-shadow] duration-200 placeholder:text-muted/80 hover:border-graphite/35 focus:border-forge focus:shadow-[0_0_0_3px_rgb(47_74_99/0.16)] focus:outline-hidden",
     invalid ? "border-danger" : "border-line",
   );
 }

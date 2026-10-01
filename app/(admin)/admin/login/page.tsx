@@ -13,7 +13,7 @@ export default async function LoginPage() {
   return (
     <main className="grid flex-1 place-items-center bg-mist px-4 py-12">
       <div className="w-full max-w-sm rounded-lg bg-white p-8 shadow-card">
-        <p className="font-heading text-xl font-bold tracking-wide text-charcoal">KINZOKU</p>
+        <p className="font-heading text-xl font-bold tracking-wide text-graphite">KINZOKU</p>
         <h1 className="mt-2 text-2xl">{admin.login.title}</h1>
         <LoginForm />
       </div>

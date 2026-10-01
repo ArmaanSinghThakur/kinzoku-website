@@ -35,3 +35,20 @@ translated during the rebuild, then checked by an independent review pass on 202
 | pl | cookies.analytics.text | …które strony są używane, abyśmy mogli ulepszać stronę. | …które podstrony są odwiedzane, abyśmy mogli ulepszać serwis. |
 | nl | nav.home (screen readers only) | Kinzoku startpagina | Kinzoku-startpagina |
 | nl | cookies.text (last sentence) | Analytics blijft uit totdat u akkoord geeft. | Google Analytics blijft uitgeschakeld totdat u akkoord geeft. |
+
+## Added in the UI redesign: the 金属 seal caption (`footer.nameMeaning`)
+
+The redesign plan's name mark adds one short footer line to every language. Translated during the
+redesign and not yet reviewed; for Kinzoku's native speakers to confirm before launch. The seal
+itself shows only "if approved" (plan §5): `nameSeal` in `lib/site.ts` turns it off everywhere.
+
+| Lang | footer.nameMeaning |
+|---|---|
+| en | Kinzoku (金属) means “metal” in Japanese. |
+| de | Kinzoku (金属) bedeutet auf Japanisch „Metall“. |
+| fr | Kinzoku (金属) signifie « métal » en japonais. |
+| es | Kinzoku (金属) significa «metal» en japonés. |
+| pt | Kinzoku (金属) significa “metal” em japonês. |
+| it | Kinzoku (金属) significa «metallo» in giapponese. |
+| pl | Kinzoku (金属) oznacza po japońsku „metal”. |
+| nl | Kinzoku (金属) betekent ‘metaal’ in het Japans. |

@@ -38,10 +38,13 @@ export default function CbamPage() {
       </PageHeader>
 
       <Section title={problem.title}>
-        <div className="grid gap-6 lg:grid-cols-3">
-          {problem.items.map((item) => (
-            <div key={item.title} className="rounded-lg border-t-4 border-gold bg-white p-6 shadow-card">
-              <h3 className="text-lg">{item.title}</h3>
+        <div data-reveal="stagger" className="grid gap-6 lg:grid-cols-3">
+          {problem.items.map((item, i) => (
+            <div key={item.title} className="rounded-xl border border-line bg-white p-6 shadow-card">
+              <p aria-hidden className="spec-label text-forge">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-3 text-lg">{item.title}</h3>
               <p className="mt-2 text-muted">{item.text}</p>
             </div>
           ))}
@@ -50,19 +53,19 @@ export default function CbamPage() {
 
       <Section tone="mist" title={solution.title}>
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-lg bg-white p-6 shadow-card">
+          <div className="rounded-xl border border-line bg-white p-6 shadow-card sm:p-8">
             <h3 className="text-xl">{solution.allocation.title}</h3>
-            <p className="mt-2 font-semibold text-steel">{solution.allocation.lead}</p>
+            <p className="mt-2 font-semibold text-forge">{solution.allocation.lead}</p>
             <ul className="mt-4 space-y-3">
               {solution.allocation.points.map((point) => (
                 <li key={point} className="flex gap-3">
-                  <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-steel" />
+                  <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-forge" />
                   {point}
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-lg bg-white p-6 shadow-card">
+          <div className="rounded-xl border border-line bg-white p-6 shadow-card sm:p-8">
             <h3 className="text-xl">{solution.advisory.title}</h3>
             {solution.advisory.paragraphs.map((p) => (
               <p key={p} className="mt-2">
@@ -72,9 +75,9 @@ export default function CbamPage() {
             <ul className="mt-4 space-y-3">
               {solution.advisory.points.map((point) => (
                 <li key={point.label} className="flex gap-3">
-                  <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-steel" />
+                  <CheckCircle2 aria-hidden className="mt-1 size-5 shrink-0 text-forge" />
                   <span>
-                    <strong className="text-charcoal">{point.label}:</strong> {point.text}
+                    <strong className="text-graphite">{point.label}:</strong> {point.text}
                   </span>
                 </li>
               ))}
@@ -93,17 +96,20 @@ export default function CbamPage() {
       </Section>
 
       <Section tone="mist" title={related.title}>
-        <ul className="grid gap-6 md:grid-cols-3">
+        <ul data-reveal="stagger" className="grid gap-6 md:grid-cols-3">
           {related.items.map((article) => (
-            <li key={article.href} className="group relative flex flex-col rounded-lg bg-white p-6 shadow-card">
+            <li
+              key={article.href}
+              className="group relative flex flex-col rounded-xl border border-line bg-white p-6 shadow-card transition-[box-shadow,translate] duration-300 hover:-translate-y-1 hover:shadow-lift"
+            >
               <h3 className="flex-1 text-lg">
-                <Link href={article.href} className="text-charcoal no-underline after:absolute after:inset-0 group-hover:text-steel">
+                <Link href={article.href} className="text-graphite no-underline after:absolute after:inset-0 group-hover:text-forge">
                   {article.title}
                 </Link>
               </h3>
-              <span aria-hidden className="mt-4 inline-flex items-center gap-1 font-heading text-sm font-semibold text-steel">
+              <span aria-hidden className="mt-4 inline-flex items-center gap-1 font-heading text-sm font-semibold text-forge">
                 {related.readMore}
-                <ArrowRight className="size-4" />
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </li>
           ))}

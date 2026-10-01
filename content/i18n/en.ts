@@ -38,6 +38,7 @@ export const en = {
     jobs: "Job Openings",
     privacy: "Privacy Policy",
     cookies: "Cookie settings",
+    nameMeaning: "Kinzoku (金属) means “metal” in Japanese.",
   },
   whatsapp: {
     label: "Chat with Kinzoku on WhatsApp",
