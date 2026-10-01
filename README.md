@@ -26,6 +26,7 @@ are caught by Mailpit: read them at http://localhost:8025.
 | `npm run dev` | Development server (server.ts: website + live chat and alerts) with live reload |
 | `npm run build` / `npm start` | Production build (site + bundled server.ts in `dist/`) / serve it |
 | `npm run lint` / `npm run typecheck` | Code checks |
+| `npm test` | All automatic checks (needs `npm run services:up`): builds a test copy into `.next-test`, starts it on port 3100 and runs `tests/` in Edge. Report: `npx playwright show-report`. Leave out the slow backup checks with `npm test -- --grep-invert @ops` |
 | `npm run services:up` / `npm run services:down` | Start / stop the local database, mail catcher and backup service (data is kept) |
 | `npm run db:migrate -- --name <change>` | After editing `prisma/schema.prisma`: record and apply the change |
 | `npm run db:deploy` | Apply recorded changes only (server) |

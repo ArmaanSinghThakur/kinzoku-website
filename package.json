@@ -17,7 +17,8 @@
     "staff:add": "tsx --env-file-if-exists=.env scripts/add-staff.mts",
     "retention:now": "tsx --env-file-if-exists=.env scripts/retention.mts",
     "backup:now": "docker compose run --rm backup \"sh /backup-scripts/backup.sh\"",
-    "backup:restore-test": "docker compose run --rm backup \"sh /backup-scripts/restore-test.sh\""
+    "backup:restore-test": "docker compose run --rm backup \"sh /backup-scripts/restore-test.sh\"",
+    "test": "playwright test"
   },
   "dependencies": {
     "@next/env": "16.3.8",
@@ -43,15 +44,18 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^20",
+    "@types/pg": "8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "esbuild": "0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "node-html-parser": "^9.0.4",
+    "pg": "8.23.1",
     "prisma": "7.10.0",
     "tailwindcss": "^4",
     "tsx": "4.23.15",

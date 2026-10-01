@@ -82,11 +82,11 @@ export function CbamCalculator({ t }: { t: Text }) {
             aria-describedby={tonnesError ? `${id}-tonnes-error` : undefined}
             className={fieldStyles(!!tonnesError)}
           />
-          {tonnesError && (
-            <p id={`${id}-tonnes-error`} className={fieldErrorStyles}>
-              {tonnesError}
-            </p>
-          )}
+          {/* Space kept for the message: leaving the field shows it on the button's mouse-down, and
+              a button that moved would lose the click. */}
+          <p id={`${id}-tonnes-error`} className={`${fieldErrorStyles} min-h-5`}>
+            {tonnesError}
+          </p>
         </div>
 
         <div>
@@ -107,11 +107,9 @@ export function CbamCalculator({ t }: { t: Text }) {
             aria-describedby={priceError ? `${id}-price-error` : undefined}
             className={fieldStyles(!!priceError)}
           />
-          {priceError && (
-            <p id={`${id}-price-error`} className={fieldErrorStyles}>
-              {priceError}
-            </p>
-          )}
+          <p id={`${id}-price-error`} className={`${fieldErrorStyles} min-h-5`}>
+            {priceError}
+          </p>
         </div>
 
         <button type="submit" className={buttonStyles()}>

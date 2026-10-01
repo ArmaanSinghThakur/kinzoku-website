@@ -39,6 +39,9 @@ const projectRoot = path.join(__dirname);
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // The test run (npm test) builds into its own folder, with a test Analytics ID, so it never
+  // replaces a real build.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   experimental: {
     // Several root layouts (one per page language) need app/global-not-found.tsx for unknown URLs.
     globalNotFound: true,
